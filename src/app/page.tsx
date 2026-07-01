@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -185,9 +185,21 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
+    const handler = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        setHeaderVisible(y < lastScrollY.current || y < 10);
+      } else {
+        setHeaderVisible(true);
+      }
+      lastScrollY.current = y;
+    };
     window.addEventListener("scroll", handler, { passive: true });
     handler();
     return () => window.removeEventListener("scroll", handler);
@@ -228,7 +240,7 @@ function Navbar() {
           scrolled || mobileOpen
             ? "border-b border-white/10 bg-[#14293f]/90 shadow-lg backdrop-blur-xl"
             : "bg-transparent"
-        }`}
+        } ${headerVisible ? "translate-y-0" : "-translate-y-full"}`}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6">
           <Link href="/" className="flex items-center gap-3" aria-label="ESA Platform home">
