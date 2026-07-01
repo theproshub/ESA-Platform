@@ -15,6 +15,13 @@ import { courses } from "@/lib/data";
 const levels = [100, 200, 300, 400] as const;
 const semesters = [1, 2] as const;
 
+const levelColors: Record<number, string> = {
+  100: "border-l-blue-500",
+  200: "border-l-emerald-500",
+  300: "border-l-amber-500",
+  400: "border-l-purple-500",
+};
+
 export default function CoursesPage() {
   const [selectedLevel, setSelectedLevel] = useState<string>("all");
   const [selectedSemester, setSelectedSemester] = useState<string>("all");
@@ -36,7 +43,7 @@ export default function CoursesPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-3xl font-bold">Course Guide</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Course Guide</h1>
         <p className="mt-2 text-muted-foreground">
           Browse the full course catalogue by level and semester.
         </p>
@@ -92,7 +99,7 @@ export default function CoursesPage() {
           {filteredCourses.map((course) => (
             <article
               key={course.id}
-              className="rounded-lg border bg-card p-5 transition-colors hover:bg-secondary/40"
+              className={`rounded-lg border border-l-4 ${levelColors[course.level] ?? ""} bg-card p-5 transition-colors hover:bg-secondary/40`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-accent">

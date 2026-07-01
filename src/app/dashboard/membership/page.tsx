@@ -31,9 +31,14 @@ export default function MembershipPage() {
                     ESA
                   </span>
                 </div>
-                <p className="text-sm text-primary-foreground/60">
-                  Economics Students&apos; Association
-                </p>
+                <div>
+                  <p className="text-sm text-primary-foreground/60">
+                    Economics Students&apos; Association
+                  </p>
+                  <p className="text-[11px] text-primary-foreground/40">
+                    Stella Maris Polytechnic University
+                  </p>
+                </div>
               </div>
               <span className="rounded-full bg-emerald-500/20 px-2.5 py-1 text-xs font-semibold text-emerald-200">
                 {currentStudent.membershipStatus === "active"
@@ -64,7 +69,7 @@ export default function MembershipPage() {
             </div>
 
             <div className="mt-6 border-t border-white/10 pt-5">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {[
                   ["Level", String(currentStudent.level)],
                   ["Department", currentStudent.department],

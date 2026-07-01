@@ -32,7 +32,7 @@ export default function SchedulePage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-3xl font-bold">Schedule</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Schedule</h1>
         <p className="mt-2 text-muted-foreground">
           Your class timetable and academic calendar.
         </p>
@@ -58,7 +58,8 @@ export default function SchedulePage() {
                     : "border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
               >
-                {day}
+                <span className="hidden sm:inline">{day}</span>
+                <span className="sm:hidden">{day.slice(0, 3)}</span>
               </button>
             ))}
           </div>

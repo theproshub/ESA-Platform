@@ -3,8 +3,11 @@ import {
   BookOpen,
   CalendarDays,
   Megaphone,
-  CreditCard,
   ArrowRight,
+  HandCoins,
+  GraduationCap,
+  Users,
+  Globe,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -13,6 +16,9 @@ import {
   classSchedules,
   announcements,
   academicSchedules,
+  financialAidRecords,
+  mentorshipMatches,
+  outreachEvents,
 } from "@/lib/data";
 
 const quickLinks = [
@@ -35,10 +41,28 @@ const quickLinks = [
     icon: Megaphone,
   },
   {
-    href: "/dashboard/membership",
-    label: "Membership",
-    description: "View your digital ID card",
-    icon: CreditCard,
+    href: "/dashboard/financial-aid",
+    label: "Financial Aid",
+    description: "Track scholarships & grants",
+    icon: HandCoins,
+  },
+  {
+    href: "/dashboard/advising",
+    label: "Advising",
+    description: "Book advising sessions",
+    icon: GraduationCap,
+  },
+  {
+    href: "/dashboard/mentorship",
+    label: "Mentorship",
+    description: "Connect with mentors",
+    icon: Users,
+  },
+  {
+    href: "/dashboard/outreach",
+    label: "Outreach",
+    description: "Join community events",
+    icon: Globe,
   },
 ];
 
@@ -56,21 +80,28 @@ export default function DashboardPage() {
   const todaySchedule = classSchedules.filter((s) => s.dayOfWeek === "Monday");
   const recentAnnouncements = announcements.slice(0, 3);
   const nextEvent = academicSchedules[1];
+  const pendingAid = financialAidRecords.filter(
+    (r) => r.status === "pending" || r.status === "under-review"
+  );
+  const activeMentor = mentorshipMatches.find((m) => m.status === "active");
+  const upcomingOutreach = outreachEvents.filter(
+    (e) => e.status === "upcoming"
+  );
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 sm:space-y-10">
       <header>
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl font-bold sm:text-3xl">
           Welcome back, {currentStudent.firstName}
         </h1>
-        <p className="mt-2 text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground sm:mt-2 sm:text-base">
           {currentStudent.program} · Level {currentStudent.level} ·{" "}
-          {studentCourses.length} courses this semester
+          {currentStudent.college}
         </p>
       </header>
 
       <nav aria-label="Quick links">
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" role="list">
           {quickLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -172,7 +203,7 @@ export default function DashboardPage() {
         </section>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid gap-8 lg:grid-cols-3">
         <section aria-labelledby="semester-heading">
           <h2 id="semester-heading" className="text-xl font-bold">
             Semester at a Glance
@@ -199,10 +230,83 @@ export default function DashboardPage() {
           </div>
         </section>
 
+        {pendingAid.length > 0 && (
+          <section aria-labelledby="aid-heading">
+            <div className="flex items-baseline justify-between">
+              <h2 id="aid-heading" className="text-xl font-bold">
+                Financial Aid
+              </h2>
+              <Link
+                href="/dashboard/financial-aid"
+                className="flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+              >
+                View all
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+            <div className="mt-4 space-y-3">
+              {pendingAid.map((record) => (
+                <div
+                  key={record.id}
+                  className="rounded-lg border bg-card p-4"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold capitalize">
+                        {record.type.replace("-", " ")}
+                      </p>
+                      <p className="mt-0.5 text-sm text-muted-foreground">
+                        {record.amount.toLocaleString()} {record.currency}
+                      </p>
+                    </div>
+                    <Badge
+                      className={
+                        record.status === "pending"
+                          ? "bg-amber-100 text-amber-800"
+                          : "bg-blue-100 text-blue-800"
+                      }
+                    >
+                      {record.status.replace("-", " ")}
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {activeMentor && (
+          <section aria-labelledby="mentor-heading">
+            <h2 id="mentor-heading" className="text-xl font-bold">
+              Your Mentor
+            </h2>
+            <div className="mt-4 rounded-lg border bg-card p-5">
+              <p className="font-semibold">{activeMentor.mentorName}</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
+                {activeMentor.mentorTitle} · {activeMentor.mentorOrganization}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {activeMentor.mentorExpertise.map((skill) => (
+                  <Badge key={skill} variant="outline" className="text-xs">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
+              {activeMentor.nextMeeting && (
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Next meeting: {activeMentor.nextMeeting}
+                </p>
+              )}
+            </div>
+          </section>
+        )}
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-2">
         {nextEvent && (
           <section aria-labelledby="upcoming-heading">
             <h2 id="upcoming-heading" className="text-xl font-bold">
-              Upcoming
+              Upcoming Academic Event
             </h2>
             <div className="mt-4 rounded-lg border bg-card p-5">
               <div className="flex items-start justify-between gap-3">
@@ -219,6 +323,49 @@ export default function DashboardPage() {
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 {nextEvent.description}
               </p>
+            </div>
+          </section>
+        )}
+
+        {upcomingOutreach.length > 0 && (
+          <section aria-labelledby="outreach-heading">
+            <div className="flex items-baseline justify-between">
+              <h2 id="outreach-heading" className="text-xl font-bold">
+                Upcoming Outreach
+              </h2>
+              <Link
+                href="/dashboard/outreach"
+                className="flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+              >
+                View all
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+            <div className="mt-4 space-y-3">
+              {upcomingOutreach.slice(0, 2).map((event) => (
+                <div
+                  key={event.id}
+                  className="rounded-lg border bg-card p-4"
+                >
+                  <p className="font-semibold">{event.title}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {event.date} · {event.time} · {event.location}
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <div className="h-1.5 flex-1 rounded-full bg-secondary">
+                      <div
+                        className="h-1.5 rounded-full bg-accent"
+                        style={{
+                          width: `${Math.min(100, (event.enrolled / event.capacity) * 100)}%`,
+                        }}
+                      />
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      {event.enrolled}/{event.capacity}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
         )}
