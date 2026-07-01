@@ -17,7 +17,7 @@ import {
   Home,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -33,10 +33,25 @@ const navItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handler = () => {
+      const y = window.scrollY;
+      setHeaderVisible(y < lastScrollY.current || y < 10);
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-card px-4 shadow-sm md:hidden">
+      <div className={cn(
+        "fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-card px-4 shadow-sm transition-transform duration-300 md:hidden",
+        headerVisible ? "translate-y-0" : "-translate-y-full"
+      )}>
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation menu"
