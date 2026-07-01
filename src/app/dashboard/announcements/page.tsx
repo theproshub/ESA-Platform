@@ -51,7 +51,7 @@ export default function AnnouncementsPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-3xl font-bold">Announcements</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Announcements</h1>
         <p className="mt-2 text-muted-foreground">
           Official notices and updates from the association.
         </p>

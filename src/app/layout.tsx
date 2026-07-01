@@ -15,9 +15,9 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ESA — Economics Students' Association",
+  title: "ESA — Economics Students' Association | Stella Maris Polytechnic University",
   description:
-    "The official platform of the Economics Students' Association. Access your courses, schedules, announcements, and membership information.",
+    "The official platform of the Economics Students' Association at Stella Maris Polytechnic University, Arthur Barclay Business College. Access courses, schedules, financial aid, mentorship, and association resources.",
 };
 
 export default function RootLayout({

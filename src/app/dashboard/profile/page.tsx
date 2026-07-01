@@ -162,6 +162,11 @@ export default function ProfilePage() {
             />
             <FieldDisplay
               icon={Building}
+              label="College"
+              value={currentStudent.college}
+            />
+            <FieldDisplay
+              icon={Building}
               label="Department"
               value={currentStudent.department}
             />
