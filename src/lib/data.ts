@@ -3,6 +3,10 @@ import type {
   Course,
   AcademicSchedule,
   Announcement,
+  FinancialAidRecord,
+  AdvisingSession,
+  MentorshipMatch,
+  OutreachEvent,
 } from "./types";
 
 // Generic demo context (no real signed-in user yet — Profile is "coming soon").
@@ -11,18 +15,18 @@ export const currentStudent: Student = {
   id: "1",
   firstName: "ESA",
   lastName: "Student",
-  email: "student@smpu.edu",
+  email: "student@smpu.edu.lr",
   phone: "",
-  studentId: "",
+  studentId: "SMPU/ABBC/2024/0042",
   level: 200,
-  program: "Associate of Science in Economics",
+  program: "BSc. Economics",
   department: "Economics",
+  college: "Arthur Barclay Business College",
+  university: "Stella Maris Polytechnic University",
   membershipStatus: "active",
   joinDate: "2024-09-15",
 };
 
-// Associate of Science Degree (ASC) Program in Economics — Curriculum Guide
-// Stella Maris Polytechnic University · 75 total credit hours
 export const courses: Course[] = [
   // First Year — First Semester (Level 100 · 23 credits)
   {
@@ -542,7 +546,8 @@ export const academicSchedules: AcademicSchedule[] = [
     type: "semester",
     startDate: "2026-09-08",
     endDate: "2026-12-19",
-    description: "Regular lectures, assignments, and coursework for Semester 1.",
+    description:
+      "Regular lectures, assignments, and coursework for Semester 1 at Stella Maris Polytechnic University.",
   },
   {
     id: "2",
@@ -551,7 +556,7 @@ export const academicSchedules: AcademicSchedule[] = [
     startDate: "2026-10-20",
     endDate: "2026-10-31",
     description:
-      "Midterm assessments for all courses. Check your course schedule for specific dates.",
+      "Midterm assessments for all courses. Check your course schedule for specific dates and venues within the ABBC Building.",
   },
   {
     id: "3",
@@ -568,7 +573,8 @@ export const academicSchedules: AcademicSchedule[] = [
     type: "vacation",
     startDate: "2026-12-20",
     endDate: "2027-01-12",
-    description: "University break. Campus facilities may have limited access.",
+    description:
+      "University break. Campus facilities may have limited access.",
   },
   {
     id: "5",
@@ -576,7 +582,8 @@ export const academicSchedules: AcademicSchedule[] = [
     type: "semester",
     startDate: "2027-01-13",
     endDate: "2027-05-16",
-    description: "Regular lectures, assignments, and coursework for Semester 2.",
+    description:
+      "Regular lectures, assignments, and coursework for Semester 2.",
   },
   {
     id: "6",
@@ -592,9 +599,9 @@ export const academicSchedules: AcademicSchedule[] = [
 export const announcements: Announcement[] = [
   {
     id: "1",
-    title: "ESA General Meeting - Emergency Session",
+    title: "ESA General Meeting — Emergency Session",
     content:
-      "All economics students are required to attend the emergency general meeting this Friday at the Main Auditorium by 4:00 PM. Attendance is mandatory. Topics include upcoming elections and semester dues.",
+      "All economics students within the Arthur Barclay Business College are required to attend the emergency general meeting this Friday at the ABBC Auditorium by 4:00 PM. Attendance is mandatory. Topics include upcoming elections and semester dues.",
     author: "ESA President",
     createdAt: "2026-06-28T10:00:00Z",
     priority: "urgent",
@@ -604,7 +611,7 @@ export const announcements: Announcement[] = [
     id: "2",
     title: "Semester Dues Payment Deadline Extended",
     content:
-      "The deadline for semester dues payment has been extended to July 15th. Please make payments via MoMo to the official ESA account. Present your receipt at the ESA office for confirmation.",
+      "The deadline for semester dues payment has been extended to July 15th. Please make payments via Orange Money or MTN Mobile Money to the official ESA account. Present your receipt at the ESA office in the ABBC Building for confirmation.",
     author: "Financial Secretary",
     createdAt: "2026-06-27T14:30:00Z",
     priority: "high",
@@ -614,8 +621,8 @@ export const announcements: Announcement[] = [
     id: "3",
     title: "Workshop: Financial Modelling & Data Analysis",
     content:
-      "The ESA Academic Committee is organizing a hands-on workshop on Financial Modelling and Data Analysis this Saturday from 9 AM to 3 PM at the Computer Lab. Registration is free for all ESA members. Bring your laptops!",
-    author: "Tech Committee",
+      "The ESA Academic Committee is organizing a hands-on workshop on Financial Modelling and Data Analysis this Saturday from 9 AM to 3 PM at the SMPU Computer Lab. Registration is free for all ESA members. Bring your laptops!",
+    author: "Academic Committee",
     createdAt: "2026-06-26T09:00:00Z",
     priority: "medium",
     category: "Academic",
@@ -624,7 +631,7 @@ export const announcements: Announcement[] = [
     id: "4",
     title: "Course Registration Reminder",
     content:
-      "All students are reminded to complete their course registration for the upcoming semester before the deadline. Visit the academic affairs office if you have any issues.",
+      "All students are reminded to complete their course registration for the upcoming semester before the deadline. Visit the academic affairs office at Stella Maris if you have any issues. ESA volunteers are available to assist with course planning.",
     author: "Academic Committee",
     createdAt: "2026-06-25T11:00:00Z",
     priority: "high",
@@ -632,22 +639,253 @@ export const announcements: Announcement[] = [
   },
   {
     id: "5",
-    title: "ESA Sports Week Coming Up!",
+    title: "ESA Community Outreach — Monrovia Clean-Up Drive",
     content:
-      "Get ready for the annual ESA Sports Week! Events include football, basketball, volleyball, and table tennis. Registration forms available at the ESA office. Prizes for all winners!",
-    author: "Sports Committee",
+      "Join the ESA community service team for our monthly outreach initiative! This month we partner with local communities in Monrovia for a neighborhood clean-up drive. Meet at the SMPU main gate at 7 AM. T-shirts provided.",
+    author: "Outreach Committee",
     createdAt: "2026-06-24T16:00:00Z",
     priority: "low",
-    category: "Events",
+    category: "Community",
   },
   {
     id: "6",
-    title: "New Study Materials Available",
+    title: "Financial Aid Applications Now Open",
     content:
-      "Past questions and lecture notes for ECON 201, MGMT 201, and MATH 221 have been uploaded to the platform. Check the resources section for downloads.",
-    author: "Academic Committee",
+      "ESA is accepting applications for the Academic Excellence Scholarship for students with a GPA of 3.5 or above. Applications close July 10th. Forms available at the ESA office or on the platform. This is part of our commitment to reducing financial barriers to education.",
+    author: "Financial Aid Committee",
     createdAt: "2026-06-23T08:00:00Z",
     priority: "medium",
-    category: "Academic",
+    category: "Financial Aid",
+  },
+];
+
+export const financialAidRecords: FinancialAidRecord[] = [
+  {
+    id: "1",
+    studentId: "SMPU/ABBC/2024/0042",
+    type: "scholarship",
+    status: "approved",
+    amount: 75000,
+    currency: "LRD",
+    semester: "2026/2027 - Semester 1",
+    appliedDate: "2026-05-15",
+    decisionDate: "2026-06-10",
+    criteria: "Academic Excellence — GPA 3.5 and above",
+    notes: "Awarded for outstanding academic performance. Covers partial tuition.",
+  },
+  {
+    id: "2",
+    studentId: "SMPU/ABBC/2024/0042",
+    type: "book-allowance",
+    status: "approved",
+    amount: 15000,
+    currency: "LRD",
+    semester: "2025/2026 - Semester 2",
+    appliedDate: "2026-01-20",
+    decisionDate: "2026-02-05",
+    criteria: "Need-based — demonstrated financial hardship",
+  },
+  {
+    id: "3",
+    studentId: "SMPU/ABBC/2024/0042",
+    type: "grant",
+    status: "pending",
+    amount: 50000,
+    currency: "LRD",
+    semester: "2026/2027 - Semester 1",
+    appliedDate: "2026-06-20",
+    criteria: "ESA Research Grant — proposed study on Liberian agricultural trade policy",
+  },
+  {
+    id: "4",
+    studentId: "SMPU/ABBC/2024/0042",
+    type: "tuition-waiver",
+    status: "under-review",
+    amount: 120000,
+    currency: "LRD",
+    semester: "2026/2027 - Semester 1",
+    appliedDate: "2026-06-25",
+    criteria: "Community Service Excellence — 100+ volunteer hours",
+  },
+];
+
+export const advisingSessions: AdvisingSession[] = [
+  {
+    id: "1",
+    studentId: "SMPU/ABBC/2024/0042",
+    advisorName: "Dr. Comfort Gbowee",
+    advisorRole: "Academic Advisor — Level 200",
+    date: "2026-07-05",
+    time: "10:00",
+    type: "course-planning",
+    status: "scheduled",
+    location: "Room 108, ABBC Building",
+    notes: "Discuss Semester 2 course selection and electives",
+  },
+  {
+    id: "2",
+    studentId: "SMPU/ABBC/2024/0042",
+    advisorName: "ESA Academic Committee",
+    advisorRole: "Peer Advisor",
+    date: "2026-07-02",
+    time: "14:00",
+    type: "registration",
+    status: "scheduled",
+    location: "ESA Office, ABBC Building",
+    notes: "Help with online registration system and course conflicts",
+  },
+  {
+    id: "3",
+    studentId: "SMPU/ABBC/2024/0042",
+    advisorName: "Prof. Ruth Sirleaf",
+    advisorRole: "Department Head",
+    date: "2026-06-15",
+    time: "11:00",
+    type: "academic-support",
+    status: "completed",
+    location: "Room 210, ABBC Building",
+    notes: "Reviewed midterm performance. Recommended additional tutorials for Macroeconomics II.",
+  },
+  {
+    id: "4",
+    studentId: "SMPU/ABBC/2024/0042",
+    advisorName: "Mr. Thomas Cooper",
+    advisorRole: "Career Services Coordinator",
+    date: "2026-07-10",
+    time: "09:00",
+    type: "career-guidance",
+    status: "scheduled",
+    location: "Career Center, Main Campus",
+    notes: "Explore internship opportunities with Central Bank of Liberia and local NGOs",
+  },
+];
+
+export const mentorshipMatches: MentorshipMatch[] = [
+  {
+    id: "1",
+    mentorName: "Dr. Amara Williams",
+    mentorTitle: "Senior Economist",
+    mentorOrganization: "Central Bank of Liberia",
+    mentorExpertise: ["Monetary Policy", "Financial Regulation", "Economic Research"],
+    menteeId: "SMPU/ABBC/2024/0042",
+    programName: "ESA Professional Mentorship Program",
+    startDate: "2026-06-01",
+    endDate: "2026-12-31",
+    status: "active",
+    meetingFrequency: "Bi-weekly",
+    nextMeeting: "2026-07-08",
+  },
+  {
+    id: "2",
+    mentorName: "Mrs. Fatu Kesselly",
+    mentorTitle: "Policy Analyst",
+    mentorOrganization: "Ministry of Finance & Development Planning",
+    mentorExpertise: ["Public Finance", "Development Policy", "Budget Analysis"],
+    menteeId: "SMPU/ABBC/2024/0042",
+    programName: "Women in Economics Leadership Initiative",
+    startDate: "2026-09-01",
+    endDate: "2027-05-31",
+    status: "upcoming",
+    meetingFrequency: "Monthly",
+  },
+  {
+    id: "3",
+    mentorName: "Mr. George Weah Jr.",
+    mentorTitle: "Regional Manager",
+    mentorOrganization: "Ecobank Liberia",
+    mentorExpertise: ["Banking", "Financial Services", "Entrepreneurship"],
+    menteeId: "SMPU/ABBC/2024/0042",
+    programName: "ESA Alumni Mentorship Network",
+    startDate: "2026-01-15",
+    endDate: "2026-05-30",
+    status: "completed",
+    meetingFrequency: "Bi-weekly",
+  },
+];
+
+export const outreachEvents: OutreachEvent[] = [
+  {
+    id: "1",
+    title: "Financial Literacy Workshop for Market Women",
+    description:
+      "ESA members teach basic budgeting, savings, and record-keeping skills to market women in the Waterside Market area of Monrovia.",
+    type: "community-service",
+    date: "2026-07-12",
+    time: "09:00",
+    location: "Waterside Market, Monrovia",
+    organizer: "ESA Outreach Committee",
+    capacity: 30,
+    enrolled: 22,
+    status: "upcoming",
+  },
+  {
+    id: "2",
+    title: "Seminar: Liberia's Path to Economic Diversification",
+    description:
+      "A panel discussion featuring economists, policymakers, and business leaders on strategies for diversifying Liberia's economy beyond traditional sectors.",
+    type: "seminar",
+    date: "2026-07-20",
+    time: "14:00",
+    location: "ABBC Auditorium, SMPU",
+    organizer: "ESA Academic Committee",
+    capacity: 150,
+    enrolled: 89,
+    status: "upcoming",
+  },
+  {
+    id: "3",
+    title: "Research Symposium: Student Papers on Liberian Economy",
+    description:
+      "Annual symposium where ESA members present original research papers on topics related to Liberia's socio-economic development. Best papers receive publication support.",
+    type: "research",
+    date: "2026-08-05",
+    time: "10:00",
+    location: "Conference Hall, Main Campus",
+    organizer: "ESA Research Committee",
+    capacity: 100,
+    enrolled: 45,
+    status: "upcoming",
+  },
+  {
+    id: "4",
+    title: "Career Networking: Meet Liberian Economists",
+    description:
+      "Networking event connecting ESA members with practicing economists from the Central Bank, LISGIS, World Bank Liberia, and local consulting firms.",
+    type: "networking",
+    date: "2026-07-25",
+    time: "16:00",
+    location: "Multi-Purpose Hall, SMPU",
+    organizer: "ESA Career Committee",
+    capacity: 80,
+    enrolled: 67,
+    status: "upcoming",
+  },
+  {
+    id: "5",
+    title: "Community Clean-Up Drive — Sinkor",
+    description:
+      "Monthly community service initiative. ESA members join residents of Sinkor to clean streets, clear gutters, and promote environmental awareness.",
+    type: "community-service",
+    date: "2026-06-14",
+    time: "07:00",
+    location: "Sinkor, Monrovia",
+    organizer: "ESA Outreach Committee",
+    capacity: 40,
+    enrolled: 40,
+    status: "completed",
+  },
+  {
+    id: "6",
+    title: "Excel & Data Analysis Workshop",
+    description:
+      "Hands-on workshop teaching ESA members how to use Excel and basic data analysis tools for economic research and coursework.",
+    type: "workshop",
+    date: "2026-06-21",
+    time: "09:00",
+    location: "Computer Lab, SMPU",
+    organizer: "ESA Academic Committee",
+    capacity: 35,
+    enrolled: 35,
+    status: "completed",
   },
 ];
