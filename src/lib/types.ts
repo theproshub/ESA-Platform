@@ -21,18 +21,7 @@ export interface Course {
   level: 100 | 200 | 300 | 400;
   semester: 1 | 2;
   department: string;
-  lecturer: string;
-}
-
-export interface ClassSchedule {
-  id: string;
-  courseCode: string;
-  courseName: string;
-  dayOfWeek: string;
-  startTime: string;
-  endTime: string;
-  venue: string;
-  lecturer: string;
+  prerequisite: string;
 }
 
 export interface AcademicSchedule {

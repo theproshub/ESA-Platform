@@ -12,7 +12,6 @@ import { PriorityBadge } from "@/components/priority-badge";
 import {
   currentStudent,
   courses,
-  classSchedules,
   announcements,
   academicSchedules,
 } from "@/lib/data";
@@ -27,7 +26,7 @@ const quickLinks = [
   {
     href: "/dashboard/schedule",
     label: "Schedule",
-    description: "Check your class timetable",
+    description: "View your semester course load",
     icon: CalendarDays,
   },
   {
@@ -48,7 +47,8 @@ export default function DashboardPage() {
   const studentCourses = courses.filter(
     (c) => c.level === currentStudent.level && c.semester === 1
   );
-  const todaySchedule = classSchedules.filter((s) => s.dayOfWeek === "Monday");
+  const yearCourses = courses.filter((c) => c.level === currentStudent.level);
+  const yearCredits = yearCourses.reduce((s, c) => s + c.creditHours, 0);
   const recentAnnouncements = announcements.slice(0, 3);
   const nextEvent = academicSchedules[1];
 
@@ -85,39 +85,50 @@ export default function DashboardPage() {
       </nav>
 
       <div className="grid gap-6 sm:gap-8 lg:grid-cols-5">
-        <section className="lg:col-span-2" aria-labelledby="today-heading">
+        <section className="lg:col-span-2" aria-labelledby="semester-load-heading">
           <div className="flex items-baseline justify-between">
-            <h2 id="today-heading" className="text-lg font-bold sm:text-xl">
-              Today&apos;s Classes
+            <h2 id="semester-load-heading" className="text-lg font-bold sm:text-xl">
+              This Semester
             </h2>
-            <span className="text-[13px] text-muted-foreground sm:text-sm">Monday</span>
+            <Link
+              href="/dashboard/schedule"
+              className="flex items-center gap-1 text-[13px] font-medium text-accent hover:underline sm:text-sm"
+            >
+              View all
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
           <div className="mt-3 space-y-2.5 sm:mt-4 sm:space-y-3">
-            {todaySchedule.length > 0 ? (
-              todaySchedule.map((cls) => (
+            {studentCourses.length > 0 ? (
+              studentCourses.map((course) => (
                 <div
-                  key={cls.id}
-                  className="flex gap-3 rounded-lg border bg-card p-3 sm:gap-4 sm:p-4"
+                  key={course.id}
+                  className="flex items-center gap-3 rounded-lg border bg-card p-3 sm:gap-4 sm:p-4"
                 >
-                  <div className="flex flex-col items-center">
-                    <span className="text-sm font-semibold sm:text-base">
-                      {cls.startTime}
+                  <div
+                    className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-md bg-secondary"
+                    aria-hidden="true"
+                  >
+                    <span className="text-sm font-bold leading-none sm:text-base">
+                      {course.creditHours}
                     </span>
-                    <span className="text-[13px] text-muted-foreground sm:text-sm">
-                      {cls.endTime}
+                    <span className="mt-0.5 text-[9px] uppercase tracking-wide text-muted-foreground">
+                      cr
                     </span>
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold sm:text-base">{cls.courseName}</p>
+                    <p className="truncate text-sm font-semibold sm:text-base">
+                      {course.name}
+                    </p>
                     <p className="text-[13px] text-muted-foreground sm:text-sm">
-                      {cls.courseCode} · {cls.venue}
+                      {course.code} · {course.department}
                     </p>
                   </div>
                 </div>
               ))
             ) : (
               <p className="rounded-lg border bg-card p-5 text-center text-sm text-muted-foreground sm:p-6">
-                No classes scheduled for today.
+                No courses listed for this semester.
               </p>
             )}
           </div>
@@ -172,7 +183,7 @@ export default function DashboardPage() {
                 value: studentCourses.reduce((s, c) => s + c.creditHours, 0),
                 label: "Credit Hours",
               },
-              { value: classSchedules.length, label: "Weekly Classes" },
+              { value: yearCredits, label: "Year Credits" },
             ].map((stat) => (
               <div
                 key={stat.label}

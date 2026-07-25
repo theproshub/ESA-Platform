@@ -106,7 +106,7 @@ export default function CoursesPage() {
                 {[
                   ["Level", String(course.level)],
                   ["Semester", String(course.semester)],
-                  ["Lecturer", course.lecturer],
+                  ["Prerequisite", course.prerequisite],
                   ["Department", course.department],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between gap-2">

@@ -1,14 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarDays, MapPin, User as UserIcon } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
-import { classSchedules, academicSchedules } from "@/lib/data";
+import { courses, currentStudent, academicSchedules } from "@/lib/data";
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const yearLabels: Record<number, string> = {
+  100: "First Year",
+  200: "Sophomore Year",
+  300: "Junior Year",
+  400: "Senior Year",
+};
+
+const semesters = [1, 2] as const;
 
 const typeStyles = {
   semester: "border-l-blue-600",
@@ -25,72 +32,104 @@ const typeBadgeStyles = {
 };
 
 export default function SchedulePage() {
-  const [selectedDay, setSelectedDay] = useState("Monday");
+  const [semester, setSemester] = useState<(typeof semesters)[number]>(1);
 
-  const daySchedule = classSchedules
-    .filter((s) => s.dayOfWeek === selectedDay)
-    .sort((a, b) => a.startTime.localeCompare(b.startTime));
+  const semesterCourses = courses
+    .filter((c) => c.level === currentStudent.level && c.semester === semester)
+    .sort((a, b) => a.code.localeCompare(b.code));
+
+  const totalCredits = semesterCourses.reduce((sum, c) => sum + c.creditHours, 0);
+  const yearLabel = yearLabels[currentStudent.level] ?? `Level ${currentStudent.level}`;
 
   return (
     <div className="space-y-5 sm:space-y-8">
       <PageHeader
         title="Schedule"
-        description="Your class timetable and academic calendar."
+        description="Your semester course load and academic calendar."
       />
 
-      <Tabs defaultValue="timetable">
+      <Tabs defaultValue="load">
         <TabsList>
-          <TabsTrigger value="timetable">Class Timetable</TabsTrigger>
+          <TabsTrigger value="load">Course Load</TabsTrigger>
           <TabsTrigger value="academic">Academic Calendar</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="timetable" className="mt-4 space-y-4 sm:mt-6 sm:space-y-5">
-          <div className="flex gap-1.5 overflow-x-auto sm:gap-2" role="tablist" aria-label="Select day">
-            {days.map((day) => (
+        <TabsContent value="load" className="mt-4 space-y-4 sm:mt-6 sm:space-y-5">
+          <div
+            className="flex gap-1.5 sm:gap-2"
+            role="tablist"
+            aria-label="Select semester"
+          >
+            {semesters.map((s) => (
               <button
-                key={day}
-                onClick={() => setSelectedDay(day)}
+                key={s}
+                onClick={() => setSemester(s)}
                 role="tab"
-                aria-selected={selectedDay === day}
+                aria-selected={semester === s}
                 className={`shrink-0 rounded-md px-3 py-2.5 text-[13px] font-medium transition-colors sm:px-4 sm:text-sm ${
-                  selectedDay === day
+                  semester === s
                     ? "bg-primary text-primary-foreground"
                     : "border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
               >
-                <span className="sm:hidden">{day.slice(0, 3)}</span>
-                <span className="hidden sm:inline">{day}</span>
+                Semester {s}
               </button>
             ))}
           </div>
 
-          <div role="tabpanel" aria-label={`${selectedDay} schedule`}>
-            {daySchedule.length > 0 ? (
-              <div className="space-y-2.5 sm:space-y-3">
-                {daySchedule.map((cls) => (
+          <div
+            role="tabpanel"
+            aria-label={`${yearLabel}, Semester ${semester} course load`}
+          >
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold sm:text-lg">
+                  {yearLabel} · Level {currentStudent.level}
+                </h2>
+                <p className="text-[13px] text-muted-foreground sm:text-sm">
+                  Semester {semester}
+                </p>
+              </div>
+              <p
+                className="text-[13px] text-muted-foreground sm:text-sm"
+                aria-live="polite"
+              >
+                {semesterCourses.length} courses · {totalCredits} credit hours
+              </p>
+            </div>
+
+            {semesterCourses.length > 0 ? (
+              <div className="mt-3 space-y-2.5 sm:mt-4 sm:space-y-3">
+                {semesterCourses.map((course) => (
                   <article
-                    key={cls.id}
+                    key={course.id}
                     className="flex gap-3 rounded-lg border bg-card p-3 sm:gap-5 sm:p-5"
                   >
                     <div className="flex w-14 shrink-0 flex-col items-center rounded-md bg-secondary py-2.5 sm:w-16 sm:py-3">
-                      <span className="text-sm font-bold sm:text-base">{cls.startTime}</span>
-                      <span className="mt-0.5 text-[12px] text-muted-foreground sm:text-sm">
-                        {cls.endTime}
+                      <span className="text-base font-bold sm:text-lg">
+                        {course.creditHours}
+                      </span>
+                      <span className="text-[11px] text-muted-foreground sm:text-xs">
+                        {course.creditHours === 1 ? "credit" : "credits"}
                       </span>
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="text-sm font-semibold sm:text-base">{cls.courseName}</h3>
-                      <p className="text-[13px] text-muted-foreground sm:text-sm">
-                        {cls.courseCode}
-                      </p>
-                      <div className="mt-2 flex flex-wrap gap-3 text-[13px] text-muted-foreground sm:mt-3 sm:gap-4 sm:text-sm">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={1.75} aria-hidden="true" />
-                          {cls.venue}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="text-sm font-semibold sm:text-base">
+                          {course.name}
+                        </h3>
+                        <span className="shrink-0 text-[13px] font-semibold text-accent sm:text-sm">
+                          {course.code}
                         </span>
-                        <span className="flex items-center gap-1">
-                          <UserIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={1.75} aria-hidden="true" />
-                          {cls.lecturer}
+                      </div>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted-foreground sm:mt-2.5 sm:text-sm">
+                        <span>{course.department}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>
+                          Prerequisite:{" "}
+                          <span className="font-medium text-foreground">
+                            {course.prerequisite}
+                          </span>
                         </span>
                       </div>
                     </div>
@@ -98,11 +137,13 @@ export default function SchedulePage() {
                 ))}
               </div>
             ) : (
-              <EmptyState
-                icon={CalendarDays}
-                title="No classes"
-                description={`You have no classes on ${selectedDay}.`}
-              />
+              <div className="mt-3 sm:mt-4">
+                <EmptyState
+                  icon={BookOpen}
+                  title="No courses"
+                  description={`No courses are listed for ${yearLabel}, Semester ${semester}.`}
+                />
+              </div>
             )}
           </div>
         </TabsContent>

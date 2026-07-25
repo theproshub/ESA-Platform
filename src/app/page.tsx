@@ -132,7 +132,7 @@ export default function HomePage() {
           <div className="mx-auto grid max-w-4xl grid-cols-2 gap-6 sm:gap-y-8 md:grid-cols-4">
             {[
               { value: "500+", label: "Active Members" },
-              { value: "45", label: "Courses Listed" },
+              { value: "50", label: "Courses Listed" },
               { value: "12", label: "Committees" },
               { value: "98%", label: "Satisfaction Rate" },
             ].map((stat) => (
