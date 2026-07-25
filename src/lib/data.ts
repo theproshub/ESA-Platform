@@ -5,13 +5,15 @@ import type {
   Announcement,
 } from "./types";
 
+// Generic demo context (no real signed-in user yet — Profile is "coming soon").
+// level and program drive the dashboard/schedule course-load views.
 export const currentStudent: Student = {
   id: "1",
-  firstName: "Kwame",
-  lastName: "Mensah",
-  email: "kwame.mensah@university.edu.gh",
-  phone: "+233 24 123 4567",
-  studentId: "ESA/2024/0042",
+  firstName: "ESA",
+  lastName: "Student",
+  email: "student@smpu.edu",
+  phone: "",
+  studentId: "",
   level: 200,
   program: "Associate of Science in Economics",
   department: "Economics",

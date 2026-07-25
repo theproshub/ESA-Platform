@@ -20,7 +20,7 @@ export function SiteHeader() {
           </span>
           <nav
             aria-label="Utility links"
-            className="flex w-full items-center justify-center gap-4 text-primary-foreground/60 sm:w-auto sm:justify-end sm:gap-5"
+            className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-1 text-primary-foreground/60 sm:w-auto sm:flex-nowrap sm:justify-end sm:gap-5"
           >
             {navLinks.map((link) => (
               <Link

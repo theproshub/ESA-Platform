@@ -3,8 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
-import { currentStudent } from "@/lib/data";
+import { Home, LogOut, User } from "lucide-react";
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -23,8 +22,6 @@ export function DashboardHeader() {
       ([href]) => href !== "/dashboard" && pathname.startsWith(href)
     )?.[1] ??
     "Dashboard";
-
-  const initials = `${currentStudent.firstName[0]}${currentStudent.lastName[0]}`;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur">
@@ -52,20 +49,23 @@ export function DashboardHeader() {
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
             <div
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
               aria-hidden="true"
             >
-              {initials}
+              <User className="h-4 w-4" strokeWidth={1.75} />
             </div>
             <div className="hidden text-left sm:block">
-              <p className="text-[13px] font-medium leading-tight">
-                {currentStudent.firstName} {currentStudent.lastName}
-              </p>
-              <p className="text-[12px] leading-tight text-muted-foreground">
-                Level {currentStudent.level}
-              </p>
+              <p className="text-[13px] font-medium leading-tight">Member</p>
             </div>
           </div>
+          <Link
+            href="/"
+            aria-label="Go to homepage"
+            title="Homepage"
+            className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            <Home className="h-4 w-4" strokeWidth={1.75} />
+          </Link>
           <button
             aria-label="Sign out"
             className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"

@@ -94,16 +94,13 @@ export function Sidebar() {
         <div className="p-4">
           <div className="flex items-center gap-3 px-2">
             <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sidebar-accent text-sm font-semibold text-sidebar-accent-foreground"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sidebar-accent text-sidebar-accent-foreground"
               aria-hidden="true"
             >
-              KM
+              <User className="h-[18px] w-[18px]" strokeWidth={1.75} />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[14px] font-medium">Kwame Mensah</p>
-              <p className="truncate text-[13px] text-sidebar-foreground/50">
-                Level 200
-              </p>
+              <p className="truncate text-[14px] font-medium">Member</p>
             </div>
             <button
               aria-label="Sign out"

@@ -55,8 +55,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 sm:space-y-10">
       <PageHeader
-        title={`Welcome back, ${currentStudent.firstName}`}
-        description={`${currentStudent.program} · Level ${currentStudent.level} · ${studentCourses.length} courses this semester`}
+        title="Welcome back"
+        description={`${currentStudent.program} · ${studentCourses.length} courses this semester`}
       />
 
       <nav aria-label="Quick links">
