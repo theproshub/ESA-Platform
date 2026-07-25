@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/page-header";
 import { currentStudent } from "@/lib/data";
 
 export default function ProfilePage() {
@@ -33,45 +34,43 @@ export default function ProfilePage() {
   );
 
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="text-3xl font-bold">Profile</h1>
-        <p className="mt-2 text-muted-foreground">
-          View and manage your student information.
-        </p>
-      </header>
+    <div className="space-y-5 sm:space-y-8">
+      <PageHeader
+        title="Profile"
+        description="View and manage your student information."
+      />
 
-      <div className="mx-auto max-w-2xl space-y-6">
-        <section className="rounded-lg border bg-card p-6">
-          <div className="flex flex-col items-center gap-5 sm:flex-row">
+      <div className="mx-auto max-w-2xl space-y-4 sm:space-y-6">
+        <section className="rounded-lg border bg-card p-4 sm:p-6">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
             <div
-              className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground"
+              className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground sm:h-16 sm:w-16 sm:text-xl"
               aria-hidden="true"
             >
               {currentStudent.firstName[0]}
               {currentStudent.lastName[0]}
             </div>
             <div className="text-center sm:text-left">
-              <h2 className="font-serif text-xl font-bold">
+              <h2 className="font-serif text-lg font-bold sm:text-xl">
                 {currentStudent.firstName} {currentStudent.lastName}
               </h2>
-              <p className="mt-1 text-muted-foreground">
+              <p className="mt-0.5 text-sm text-muted-foreground sm:mt-1">
                 {currentStudent.program}
               </p>
-              <div className="mt-2 flex flex-wrap justify-center gap-2 sm:justify-start">
-                <Badge className="bg-emerald-100 text-emerald-800">
+              <div className="mt-2 flex flex-wrap justify-center gap-1.5 sm:justify-start sm:gap-2">
+                <Badge className="text-[11px] bg-emerald-100 text-emerald-800 sm:text-xs">
                   {currentStudent.membershipStatus === "active"
                     ? "Active Member"
                     : "Inactive"}
                 </Badge>
-                <Badge variant="outline">Level {currentStudent.level}</Badge>
+                <Badge variant="outline" className="text-[11px] sm:text-xs">Level {currentStudent.level}</Badge>
               </div>
             </div>
-            <div className="sm:ml-auto">
+            <div className="w-full sm:ml-auto sm:w-auto">
               <Button
                 variant={editing ? "default" : "outline"}
                 onClick={editing ? handleSave : () => setEditing(true)}
-                className="gap-2"
+                className="w-full gap-2 sm:w-auto"
               >
                 {editing ? (
                   <>
@@ -90,13 +89,13 @@ export default function ProfilePage() {
         </section>
 
         <section
-          className="rounded-lg border bg-card p-6"
+          className="rounded-lg border bg-card p-4 sm:p-6"
           aria-labelledby="personal-heading"
         >
-          <h2 id="personal-heading" className="text-lg font-semibold">
+          <h2 id="personal-heading" className="text-base font-semibold sm:text-lg">
             Personal Information
           </h2>
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+          <div className="mt-4 grid gap-4 sm:mt-5 sm:grid-cols-2 sm:gap-5">
             <FieldDisplay
               icon={Hash}
               label="Student ID"
@@ -105,7 +104,7 @@ export default function ProfilePage() {
             <div>
               <label
                 htmlFor="email-input"
-                className="flex items-center gap-2 text-sm text-muted-foreground"
+                className="flex items-center gap-2 text-[13px] text-muted-foreground sm:text-sm"
               >
                 <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                 Email Address
@@ -120,13 +119,13 @@ export default function ProfilePage() {
                   className="mt-1"
                 />
               ) : (
-                <p className="mt-1 font-medium">{formData.email}</p>
+                <p className="mt-1 text-sm font-medium sm:text-base">{formData.email}</p>
               )}
             </div>
             <div>
               <label
                 htmlFor="phone-input"
-                className="flex items-center gap-2 text-sm text-muted-foreground"
+                className="flex items-center gap-2 text-[13px] text-muted-foreground sm:text-sm"
               >
                 <Phone className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                 Phone Number
@@ -141,20 +140,20 @@ export default function ProfilePage() {
                   className="mt-1"
                 />
               ) : (
-                <p className="mt-1 font-medium">{formData.phone}</p>
+                <p className="mt-1 text-sm font-medium sm:text-base">{formData.phone}</p>
               )}
             </div>
           </div>
         </section>
 
         <section
-          className="rounded-lg border bg-card p-6"
+          className="rounded-lg border bg-card p-4 sm:p-6"
           aria-labelledby="academic-heading"
         >
-          <h2 id="academic-heading" className="text-lg font-semibold">
+          <h2 id="academic-heading" className="text-base font-semibold sm:text-lg">
             Academic Information
           </h2>
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+          <div className="mt-4 grid gap-4 sm:mt-5 sm:grid-cols-2 sm:gap-5">
             <FieldDisplay
               icon={GraduationCap}
               label="Program"

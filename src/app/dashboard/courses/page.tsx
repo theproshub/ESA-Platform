@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PageHeader } from "@/components/page-header";
+import { EmptyState } from "@/components/empty-state";
 import { courses } from "@/lib/data";
 
 const levels = [100, 200, 300, 400] as const;
@@ -34,85 +36,82 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="text-3xl font-bold">Course Guide</h1>
-        <p className="mt-2 text-muted-foreground">
-          Browse the full course catalogue by level and semester.
-        </p>
-      </header>
+    <div className="space-y-5 sm:space-y-8">
+      <PageHeader
+        title="Course Guide"
+        description="Browse the full course catalogue by level and semester."
+      />
 
       <div
-        className="flex flex-col gap-4 sm:flex-row sm:items-center"
+        className="space-y-3 sm:space-y-0 sm:flex sm:flex-row sm:items-center sm:gap-4"
         role="search"
         aria-label="Filter courses"
       >
-        <label className="text-sm font-medium text-muted-foreground">
-          Filter by:
-        </label>
-        <Select
-          value={selectedLevel}
-          onValueChange={(v) => setSelectedLevel(v ?? "all")}
-        >
-          <SelectTrigger className="w-full sm:w-44" aria-label="Select level">
-            <SelectValue placeholder="Level" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Levels</SelectItem>
-            {levels.map((level) => (
-              <SelectItem key={level} value={String(level)}>
-                Level {level}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select
-          value={selectedSemester}
-          onValueChange={(v) => setSelectedSemester(v ?? "all")}
-        >
-          <SelectTrigger className="w-full sm:w-48" aria-label="Select semester">
-            <SelectValue placeholder="Semester" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Semesters</SelectItem>
-            {semesters.map((sem) => (
-              <SelectItem key={sem} value={String(sem)}>
-                Semester {sem}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <p className="ml-auto text-sm text-muted-foreground" aria-live="polite">
+        <div className="flex gap-2 sm:gap-4">
+          <Select
+            value={selectedLevel}
+            onValueChange={(v) => setSelectedLevel(v ?? "all")}
+          >
+            <SelectTrigger className="flex-1 sm:w-44 sm:flex-none" aria-label="Select level">
+              <SelectValue placeholder="Level" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Levels</SelectItem>
+              {levels.map((level) => (
+                <SelectItem key={level} value={String(level)}>
+                  Level {level}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={selectedSemester}
+            onValueChange={(v) => setSelectedSemester(v ?? "all")}
+          >
+            <SelectTrigger className="flex-1 sm:w-48 sm:flex-none" aria-label="Select semester">
+              <SelectValue placeholder="Semester" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Semesters</SelectItem>
+              {semesters.map((sem) => (
+                <SelectItem key={sem} value={String(sem)}>
+                  Semester {sem}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <p className="text-[13px] text-muted-foreground sm:ml-auto sm:text-sm" aria-live="polite">
           {filteredCourses.length} courses · {totalCredits} credit hours
         </p>
       </div>
 
       {filteredCourses.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {filteredCourses.map((course) => (
             <article
               key={course.id}
-              className="rounded-lg border bg-card p-5 transition-colors hover:bg-secondary/40"
+              className="rounded-lg border bg-card p-4 transition-colors hover:bg-secondary/40 sm:p-5"
             >
               <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-accent">
+                <span className="text-[13px] font-semibold text-accent sm:text-sm">
                   {course.code}
                 </span>
-                <Badge variant="outline">{course.creditHours} CR</Badge>
+                <Badge variant="outline" className="text-[11px] sm:text-xs">{course.creditHours} CR</Badge>
               </div>
-              <h3 className="mt-2 font-serif text-lg font-semibold leading-snug">
+              <h3 className="mt-1.5 font-serif text-base font-semibold leading-snug sm:mt-2 sm:text-lg">
                 {course.name}
               </h3>
-              <dl className="mt-4 space-y-1.5 text-sm">
+              <dl className="mt-3 space-y-1 text-[13px] sm:mt-4 sm:space-y-1.5 sm:text-sm">
                 {[
                   ["Level", String(course.level)],
                   ["Semester", String(course.semester)],
                   ["Lecturer", course.lecturer],
                   ["Department", course.department],
                 ].map(([label, value]) => (
-                  <div key={label} className="flex justify-between">
+                  <div key={label} className="flex justify-between gap-2">
                     <dt className="text-muted-foreground">{label}</dt>
-                    <dd className="font-medium">{value}</dd>
+                    <dd className="truncate font-medium">{value}</dd>
                   </div>
                 ))}
               </dl>
@@ -120,17 +119,11 @@ export default function CoursesPage() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center rounded-lg border bg-card py-16 text-center">
-          <BookOpen
-            className="h-10 w-10 text-muted-foreground/40"
-            strokeWidth={1.5}
-            aria-hidden="true"
-          />
-          <p className="mt-4 text-lg font-medium">No courses found</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Try adjusting your filters.
-          </p>
-        </div>
+        <EmptyState
+          icon={BookOpen}
+          title="No courses found"
+          description="Try adjusting your filters."
+        />
       )}
     </div>
   );

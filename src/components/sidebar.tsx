@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -9,12 +10,9 @@ import {
   Megaphone,
   CreditCard,
   User,
-  Menu,
-  X,
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -25,42 +23,34 @@ const navItems = [
   { href: "/dashboard/profile", label: "Profile", icon: User },
 ];
 
+const mobileNavItems = [
+  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+  { href: "/dashboard/courses", label: "Courses", icon: BookOpen },
+  { href: "/dashboard/schedule", label: "Schedule", icon: CalendarDays },
+  { href: "/dashboard/announcements", label: "News", icon: Megaphone },
+  { href: "/dashboard/profile", label: "Profile", icon: User },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
-      <button
-        onClick={() => setMobileOpen(true)}
-        aria-label="Open navigation menu"
-        className="fixed top-4 left-4 z-50 flex h-11 w-11 items-center justify-center rounded-md border border-border bg-card shadow-sm transition-colors hover:bg-secondary md:hidden"
-      >
-        <Menu className="h-5 w-5" />
-      </button>
-
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/30 md:hidden"
-          onClick={() => setMobileOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-
+      {/* Desktop sidebar */}
       <nav
         aria-label="Main navigation"
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-[256px] flex-col bg-sidebar text-sidebar-foreground transition-transform duration-200 md:translate-x-0",
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
-        )}
+        className="fixed inset-y-0 left-0 z-50 hidden w-[256px] flex-col bg-sidebar text-sidebar-foreground md:flex"
       >
-        <div className="flex items-center justify-between px-5 py-5">
+        <div className="flex items-center px-5 py-5">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded bg-sidebar-primary">
-              <span className="text-sm font-bold text-sidebar-primary-foreground">
-                ESA
-              </span>
-            </div>
+            <Image
+              src="/esa-logo.png"
+              alt="ESA Logo"
+              width={36}
+              height={42}
+              quality={90}
+              className="h-[42px] w-9 object-contain"
+            />
             <div>
               <p className="text-[15px] font-semibold leading-tight">
                 ESA Platform
@@ -70,13 +60,6 @@ export function Sidebar() {
               </p>
             </div>
           </Link>
-          <button
-            onClick={() => setMobileOpen(false)}
-            aria-label="Close navigation menu"
-            className="rounded p-1 hover:bg-sidebar-accent md:hidden"
-          >
-            <X className="h-5 w-5" />
-          </button>
         </div>
 
         <div className="mx-5 border-t border-sidebar-border" />
@@ -90,7 +73,6 @@ export function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  onClick={() => setMobileOpen(false)}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "flex items-center gap-3 rounded-md px-3 py-2.5 text-[15px] transition-colors",
@@ -131,6 +113,38 @@ export function Sidebar() {
             </button>
           </div>
         </div>
+      </nav>
+
+      {/* Mobile bottom tab bar */}
+      <nav
+        aria-label="Mobile navigation"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-card md:hidden"
+      >
+        <ul className="flex items-stretch" role="list">
+          {mobileNavItems.map((item) => {
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/dashboard" && pathname.startsWith(item.href));
+            return (
+              <li key={item.href} className="flex-1">
+                <Link
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "flex flex-col items-center gap-0.5 py-2 text-[11px] transition-colors",
+                    isActive
+                      ? "font-semibold text-accent"
+                      : "text-muted-foreground"
+                  )}
+                >
+                  <item.icon className="h-5 w-5" strokeWidth={isActive ? 2 : 1.5} />
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="h-[env(safe-area-inset-bottom)]" />
       </nav>
     </>
   );

@@ -1,0 +1,105 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Mail, MapPin, Building2, Clock, ArrowRight } from "lucide-react";
+import { InfoHero } from "@/components/info-hero";
+import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Contact — Economics Students Association",
+  description:
+    "Get in touch with the Economics Students Association at Stella Maris Polytechnic University.",
+};
+
+const EMAIL = "Econstudentsassn25@gmail.com";
+
+const details = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: EMAIL,
+    href: `mailto:${EMAIL}`,
+  },
+  {
+    icon: Building2,
+    label: "University",
+    value: "Stella Maris Polytechnic University",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Department of Economics, Main Campus",
+  },
+  {
+    icon: Clock,
+    label: "Office hours",
+    value: "Monday – Friday, 9:00am – 4:00pm",
+  },
+];
+
+export default function ContactPage() {
+  return (
+    <>
+      <InfoHero
+        eyebrow="Contact"
+        title="Get in touch"
+        description="We'd love to hear from you — whether it's a question, an idea, or a membership enquiry."
+      />
+
+      <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {details.map((item) => (
+            <div
+              key={item.label}
+              className="flex items-start gap-3 rounded-lg border bg-card p-5"
+            >
+              <item.icon
+                className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+                strokeWidth={1.75}
+                aria-hidden="true"
+              />
+              <div className="min-w-0">
+                <p className="text-[13px] font-medium uppercase tracking-wide text-muted-foreground">
+                  {item.label}
+                </p>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="mt-1 block break-all text-[15px] font-medium transition-colors hover:text-accent"
+                  >
+                    {item.value}
+                  </a>
+                ) : (
+                  <p className="mt-1 text-[15px] font-medium">{item.value}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 rounded-xl border bg-card p-6 text-center sm:p-8">
+          <h2 className="font-serif text-xl font-semibold sm:text-2xl">
+            Send us a message
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-muted-foreground">
+            The quickest way to reach the association is by email. We aim to
+            respond to enquiries within a few working days.
+          </p>
+          <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a href={`mailto:${EMAIL}`}>
+              <Button className="w-full gap-2 sm:w-auto">
+                <Mail className="h-4 w-4" strokeWidth={1.75} />
+                Email the association
+              </Button>
+            </a>
+            <Link href="/dashboard/membership">
+              <Button variant="outline" className="w-full gap-2 sm:w-auto">
+                Membership
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

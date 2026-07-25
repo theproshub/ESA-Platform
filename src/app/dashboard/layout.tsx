@@ -1,4 +1,6 @@
 import { Sidebar } from "@/components/sidebar";
+import { DashboardHeader } from "@/components/dashboard-header";
+import { SiteFooter } from "@/components/site-footer";
 
 export default function DashboardLayout({
   children,
@@ -8,11 +10,15 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
-      <main id="main-content" className="md:ml-[256px]">
-        <div className="mx-auto max-w-5xl px-6 py-8 pt-20 md:px-8 md:pt-8">
-          {children}
-        </div>
-      </main>
+      <div className="flex min-h-screen flex-col md:ml-[256px]">
+        <DashboardHeader />
+        <main id="main-content" className="flex-1">
+          <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6 md:px-8 md:pt-8">
+            {children}
+          </div>
+        </main>
+        <SiteFooter className="mt-8 pb-24 md:mt-12 md:pb-0" />
+      </div>
     </div>
   );
 }
