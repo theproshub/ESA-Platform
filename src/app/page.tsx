@@ -7,6 +7,9 @@ import {
   CreditCard,
   Users,
   FileText,
+  HandCoins,
+  GraduationCap,
+  Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/site-header";
@@ -54,6 +57,66 @@ const features = [
     title: "Academic Resources",
     description:
       "Access past questions, lecture notes, and study materials curated by the academic committee.",
+  },
+];
+
+const services = [
+  {
+    icon: HandCoins,
+    image: "/service-financial-aid.webp",
+    title: "Financial Aid",
+    href: "/dashboard/financial-aid",
+    description:
+      "Scholarships, grants, tuition waivers, and book allowances to support your studies.",
+  },
+  {
+    icon: GraduationCap,
+    image: "/service-advising.webp",
+    title: "Advising",
+    href: "/dashboard/advising",
+    description:
+      "Book academic advising for course planning, registration, and career guidance.",
+  },
+  {
+    icon: Users,
+    image: "/service-mentorship.webp",
+    title: "Mentorship",
+    href: "/dashboard/mentorship",
+    description:
+      "Get matched with mentors from academia and industry for guidance and networking.",
+  },
+  {
+    icon: Globe,
+    image: "/service-outreach.webp",
+    title: "Outreach",
+    href: "/dashboard/outreach",
+    description:
+      "Workshops, seminars, community service, and networking events for members.",
+  },
+];
+
+// Placeholder alumni testimonials — replace with real quotes before launch.
+const testimonials = [
+  {
+    quote:
+      "The rigour of the economics programme — and the resources the association shared — gave me a real edge when I moved into financial analysis. I lean on those foundations every day.",
+    name: "Aminata Konneh",
+    role: "Financial Analyst · Class of 2021",
+    initials: "AK",
+  },
+  {
+    quote:
+      "Staying organised with my course load and connecting through ESA shaped how I work today as a research economist. It set me up for the role.",
+    name: "Emmanuel Tarr",
+    role: "Research Economist · Class of 2020",
+    initials: "ET",
+  },
+  {
+    quote:
+      "The mentorship I found through the association led to my first job offer. Years on, I'm still grateful for the network it opened up.",
+    name: "Grace Wesseh",
+    role: "Policy Analyst · Class of 2022",
+    initials: "GW",
   },
 ];
 
@@ -190,6 +253,105 @@ export default function HomePage() {
                     </p>
                   </div>
                 </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-primary px-4 py-14 sm:px-6 md:py-24">
+          <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-2xl font-bold text-primary-foreground sm:text-3xl">
+                From students to professionals
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-primary-foreground/70 sm:mt-4 sm:text-lg">
+                Hear from graduates now building careers in economics, finance,
+                and policy.
+              </p>
+            </div>
+            <div className="mx-auto mt-10 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-3">
+              {testimonials.map((testimonial) => (
+                <figure
+                  key={testimonial.name}
+                  className="flex flex-col rounded-xl border border-white/10 bg-white/[0.04] p-6"
+                >
+                  <span
+                    className="font-serif text-4xl leading-none text-accent"
+                    aria-hidden="true"
+                  >
+                    &ldquo;
+                  </span>
+                  <blockquote className="mt-2 flex-1 text-[15px] leading-relaxed text-primary-foreground/85">
+                    {testimonial.quote}
+                  </blockquote>
+                  <figcaption className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-sm font-semibold text-primary-foreground"
+                      aria-hidden="true"
+                    >
+                      {testimonial.initials}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-primary-foreground">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-[13px] text-primary-foreground/60">
+                        {testimonial.role}
+                      </p>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="support"
+          className="border-t bg-secondary/30 px-4 py-14 sm:px-6 md:py-24"
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-2xl font-bold sm:text-3xl">
+                Student support &amp; community
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
+                Beyond the classroom — support and opportunities to help you
+                thrive throughout your studies.
+              </p>
+            </div>
+            <div className="mx-auto mt-10 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-4">
+              {services.map((service) => (
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  className="group overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-md"
+                >
+                  <div className="relative aspect-[3/2] overflow-hidden bg-secondary">
+                    <Image
+                      src={service.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-center gap-2">
+                      <service.icon
+                        className="h-5 w-5 shrink-0 text-accent"
+                        strokeWidth={1.75}
+                        aria-hidden="true"
+                      />
+                      <h3 className="font-serif text-lg font-semibold sm:text-xl">
+                        {service.title}
+                      </h3>
+                    </div>
+                    <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+                      {service.description}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
