@@ -58,21 +58,14 @@ export function Sidebar() {
         )}
       >
         <div className="flex items-center justify-between px-5 py-5">
-          <Link href="/dashboard" onClick={close} className="flex items-center gap-3">
-            <span
-              aria-hidden="true"
-              className="label flex h-9 w-10 items-center justify-center rounded-sm bg-sidebar-accent text-sidebar-accent-foreground"
-            >
-              ESA
-            </span>
-            <div>
-              <p className="font-serif text-base font-semibold leading-tight tracking-[-0.02em]">
-                ESA Platform
-              </p>
-              <p className="label mt-0.5 leading-tight text-sidebar-foreground/45">
-                Stella Maris Poly
-              </p>
-            </div>
+          {/* Wordmark only, matching the site header. */}
+          <Link href="/dashboard" onClick={close}>
+            <p className="font-serif text-base font-semibold leading-tight tracking-[-0.02em]">
+              ESA Platform
+            </p>
+            <p className="label mt-0.5 leading-tight text-sidebar-foreground/45">
+              Stella Maris Poly
+            </p>
           </Link>
           <button
             onClick={close}
