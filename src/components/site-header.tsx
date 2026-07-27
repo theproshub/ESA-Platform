@@ -3,7 +3,13 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/site-nav";
 
-export function SiteHeader() {
+export function SiteHeader({
+  /** Suppressed inside the dashboard, where "Open Dashboard" points at the
+      page you are already on. */
+  showDashboardCta = true,
+}: {
+  showDashboardCta?: boolean;
+}) {
   return (
     // Sticks by the height of the eyebrow strip below, so that strip scrolls
     // out of view and the navigation bar pins to the top. Static on mobile,
@@ -37,14 +43,16 @@ export function SiteHeader() {
 
           <div className="flex items-stretch justify-center gap-6 border-t border-border md:ml-auto md:gap-10 md:border-t-0">
             <SiteNav />
-            <div className="hidden items-center md:flex">
-              <Link href="/dashboard">
-                <Button className="h-9 gap-2 px-4">
-                  Open Dashboard
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
+            {showDashboardCta && (
+              <div className="hidden items-center md:flex">
+                <Link href="/dashboard">
+                  <Button className="h-9 gap-2 px-4">
+                    Open Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
