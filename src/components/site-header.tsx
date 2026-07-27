@@ -44,10 +44,13 @@ export function SiteHeader({
             <DashboardNavToggle />
           </div>
 
-          {/* Wordmark only — the same brand string the sidebar drawer uses. */}
-          <Link href="/" className="flex items-center">
-            <span className="font-serif text-[19px] font-semibold leading-none tracking-[-0.02em] md:text-xl">
+          {/* Same lockup as the sidebar: wordmark over the motto. */}
+          <Link href="/" className="flex min-w-0 flex-col justify-center">
+            <span className="font-serif text-[19px] font-semibold leading-tight tracking-[-0.02em] md:text-xl">
               ESA Platform
+            </span>
+            <span className="mt-0.5 truncate font-serif text-[13px] italic leading-tight text-muted-foreground">
+              Non Scholae Sed Vitae Discimu
             </span>
           </Link>
 
