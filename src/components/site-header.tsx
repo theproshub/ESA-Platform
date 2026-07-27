@@ -44,15 +44,8 @@ export function SiteHeader({
             <DashboardNavToggle />
           </div>
 
-          {/* One brand string across the site: the sidebar drawer uses the same
-              monogram and wordmark. */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <span
-              aria-hidden="true"
-              className="label flex h-8 w-9 shrink-0 items-center justify-center rounded-sm bg-brand text-brand-foreground"
-            >
-              ESA
-            </span>
+          {/* Wordmark only — the same brand string the sidebar drawer uses. */}
+          <Link href="/" className="flex items-center">
             <span className="font-serif text-[19px] font-semibold leading-none tracking-[-0.02em] md:text-xl">
               ESA Platform
             </span>
