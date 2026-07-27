@@ -50,34 +50,34 @@ export default function ContactPage() {
           {details.map((item) => (
             <div
               key={item.label}
-              className="flex items-start gap-3 rounded-lg border bg-card p-5"
+              className="flex items-start gap-3 rounded-lg bg-card p-5 ring-1 ring-border"
             >
               <item.icon
-                className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+                className="mt-0.5 h-5 w-5 shrink-0 text-brand"
                 strokeWidth={1.75}
                 aria-hidden="true"
               />
               <div className="min-w-0">
-                <p className="text-[13px] font-medium uppercase tracking-wide text-muted-foreground">
+                <p className="label text-muted-foreground">
                   {item.label}
                 </p>
                 {item.href ? (
                   <a
                     href={item.href}
-                    className="mt-1 block break-all text-[15px] font-medium transition-colors hover:text-accent"
+                    className="mt-1.5 block break-all text-[15px] font-medium transition-colors hover:text-accent"
                   >
                     {item.value}
                   </a>
                 ) : (
-                  <p className="mt-1 text-[15px] font-medium">{item.value}</p>
+                  <p className="mt-1.5 text-[15px] font-medium">{item.value}</p>
                 )}
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-8 rounded-xl border bg-card p-6 text-center sm:p-8">
-          <h2 className="font-serif text-xl font-semibold sm:text-2xl">
+        <div className="mt-8 rounded-xl bg-card p-6 text-center ring-1 ring-border sm:p-8">
+          <h2 className="text-2xl font-semibold tracking-[-0.02em] sm:text-[28px]">
             Send us a message
           </h2>
           <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-muted-foreground">

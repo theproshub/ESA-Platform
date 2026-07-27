@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { courses, currentStudent, academicSchedules } from "@/lib/data";
+import { statusTone, statusRule } from "@/lib/status";
 
 const yearLabels: Record<number, string> = {
   100: "First Year",
@@ -18,17 +19,17 @@ const yearLabels: Record<number, string> = {
 const semesters = [1, 2] as const;
 
 const typeStyles = {
-  semester: "border-l-blue-600",
-  midterm: "border-l-amber-500",
-  finals: "border-l-red-600",
-  vacation: "border-l-emerald-600",
+  semester: statusRule.info,
+  midterm: statusRule.attention,
+  finals: statusRule.critical,
+  vacation: statusRule.positive,
 };
 
 const typeBadgeStyles = {
-  semester: "bg-blue-100 text-blue-800",
-  midterm: "bg-amber-100 text-amber-800",
-  finals: "bg-red-100 text-red-800",
-  vacation: "bg-emerald-100 text-emerald-800",
+  semester: statusTone.info,
+  midterm: statusTone.attention,
+  finals: statusTone.critical,
+  vacation: statusTone.positive,
 };
 
 export default function SchedulePage() {
@@ -69,7 +70,7 @@ export default function SchedulePage() {
                 className={`shrink-0 rounded-md px-3 py-2.5 text-[13px] font-medium transition-colors sm:px-4 sm:text-sm ${
                   semester === s
                     ? "bg-primary text-primary-foreground"
-                    : "border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    : "bg-card text-muted-foreground ring-1 ring-border hover:bg-secondary hover:text-foreground"
                 }`}
               >
                 Semester {s}
@@ -83,7 +84,7 @@ export default function SchedulePage() {
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div>
-                <h2 className="text-base font-bold sm:text-lg">
+                <h2 className="text-lg font-semibold tracking-[-0.015em] sm:text-xl">
                   {yearLabel} · Level {currentStudent.level}
                 </h2>
                 <p className="text-[13px] text-muted-foreground sm:text-sm">
@@ -103,13 +104,13 @@ export default function SchedulePage() {
                 {semesterCourses.map((course) => (
                   <article
                     key={course.id}
-                    className="flex gap-3 rounded-lg border bg-card p-3 sm:gap-5 sm:p-5"
+                    className="flex gap-3 rounded-lg bg-card p-3 ring-1 ring-border sm:gap-5 sm:p-5"
                   >
                     <div className="flex w-14 shrink-0 flex-col items-center rounded-md bg-secondary py-2.5 sm:w-16 sm:py-3">
-                      <span className="text-base font-bold sm:text-lg">
+                      <span className="figure text-lg font-semibold sm:text-xl">
                         {course.creditHours}
                       </span>
-                      <span className="text-[11px] text-muted-foreground sm:text-xs">
+                      <span className="label mt-0.5 text-muted-foreground">
                         {course.creditHours === 1 ? "credit" : "credits"}
                       </span>
                     </div>
@@ -118,7 +119,7 @@ export default function SchedulePage() {
                         <h3 className="text-sm font-semibold sm:text-base">
                           {course.name}
                         </h3>
-                        <span className="shrink-0 text-[13px] font-semibold text-accent sm:text-sm">
+                        <span className="figure shrink-0 text-[13px] font-semibold text-brand sm:text-sm">
                           {course.code}
                         </span>
                       </div>
@@ -152,16 +153,16 @@ export default function SchedulePage() {
           {academicSchedules.map((event) => (
             <article
               key={event.id}
-              className={`rounded-lg border border-l-4 bg-card p-3.5 sm:p-5 ${typeStyles[event.type]}`}
+              className={`rounded-lg border-l-4 bg-card p-3.5 ring-1 ring-border sm:p-5 ${typeStyles[event.type]}`}
             >
               <div className="flex items-start justify-between gap-2 sm:gap-3">
                 <div className="min-w-0">
                   <h3 className="text-sm font-semibold sm:text-base">{event.title}</h3>
-                  <p className="mt-0.5 text-[13px] text-muted-foreground sm:mt-1 sm:text-sm">
+                  <p className="figure mt-1 text-[13px] text-muted-foreground">
                     {event.startDate} — {event.endDate}
                   </p>
                 </div>
-                <Badge className={`shrink-0 text-[11px] capitalize sm:text-xs ${typeBadgeStyles[event.type]}`}>
+                <Badge className={`label shrink-0 ${typeBadgeStyles[event.type]}`}>
                   {event.type}
                 </Badge>
               </div>

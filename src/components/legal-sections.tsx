@@ -6,8 +6,9 @@ export function LegalSections({ sections }: { sections: LegalSection[] }) {
       <div className="space-y-8 sm:space-y-10">
         {sections.map((section, i) => (
           <section key={section.heading}>
-            <h2 className="font-serif text-xl font-semibold sm:text-2xl">
-              <span className="text-accent">{i + 1}.</span> {section.heading}
+            <h2 className="text-2xl font-semibold tracking-[-0.02em] sm:text-[28px]">
+              <span className="figure text-muted-foreground">{i + 1}.</span>{" "}
+              {section.heading}
             </h2>
             {section.body.map((paragraph, j) => (
               <p

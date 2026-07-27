@@ -91,15 +91,17 @@ export default function CoursesPage() {
           {filteredCourses.map((course) => (
             <article
               key={course.id}
-              className="rounded-lg border bg-card p-4 transition-colors hover:bg-secondary/40 sm:p-5"
+              className="rounded-lg bg-card p-4 ring-1 ring-border transition-colors hover:bg-secondary/40 sm:p-5"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-semibold text-accent sm:text-sm">
+                <span className="figure text-[13px] font-semibold text-brand sm:text-sm">
                   {course.code}
                 </span>
-                <Badge variant="outline" className="text-[11px] sm:text-xs">{course.creditHours} CR</Badge>
+                <Badge variant="outline" className="label">
+                  {course.creditHours} CR
+                </Badge>
               </div>
-              <h3 className="mt-1.5 font-serif text-base font-semibold leading-snug sm:mt-2 sm:text-lg">
+              <h3 className="mt-2 text-base font-semibold leading-snug tracking-[-0.015em] sm:text-lg">
                 {course.name}
               </h3>
               <dl className="mt-3 space-y-1 text-[13px] sm:mt-4 sm:space-y-1.5 sm:text-sm">

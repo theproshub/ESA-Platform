@@ -1,15 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Source_Serif_4, Inter } from "next/font/google";
+import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const serif = Source_Serif_4({
+// Newsreader carries the headings — a news serif, set heavy, for an
+// association that publishes as much as it teaches.
+const serif = Newsreader({
   variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
 });
 
-const sans = Inter({
+const sans = IBM_Plex_Sans({
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Every figure on the platform — credit hours, course codes, dates, counts —
+// is set in mono with tabular numerals so columns of them line up.
+const mono = IBM_Plex_Mono({
+  variable: "--font-mono",
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -33,7 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${serif.variable} ${sans.variable} ${mono.variable} h-full`}
+    >
       <body className="min-h-full flex flex-col">
         <a
           href="#main-content"

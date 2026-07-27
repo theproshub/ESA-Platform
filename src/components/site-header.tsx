@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Star } from "@/components/star-mark";
 
 const navLinks = [
   { label: "Features", href: "/#features" },
@@ -13,20 +14,21 @@ const navLinks = [
 export function SiteHeader() {
   return (
     <header>
-      <div className="bg-primary text-primary-foreground">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-1.5 text-[12px] sm:px-6 sm:text-[13px]">
-          <span className="hidden text-primary-foreground/60 sm:inline">
+      <div className="bg-brand text-brand-foreground">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 sm:px-6">
+          <span className="label hidden items-center gap-2 text-brand-foreground/50 sm:flex">
+            <Star className="h-2 w-2 text-accent" />
             Stella Maris Polytechnic University
           </span>
           <nav
             aria-label="Utility links"
-            className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-1 text-primary-foreground/60 sm:w-auto sm:flex-nowrap sm:justify-end sm:gap-5"
+            className="label flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-1 text-brand-foreground/50 sm:w-auto sm:flex-nowrap sm:justify-end sm:gap-6"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="transition-colors hover:text-primary-foreground"
+                className="transition-colors hover:text-brand-foreground"
               >
                 {link.label}
               </Link>
@@ -50,16 +52,16 @@ export function SiteHeader() {
               className="h-10 w-9 object-contain sm:h-14 sm:w-12"
             />
             <div>
-              <p className="font-serif text-[15px] font-bold leading-tight tracking-tight sm:text-lg md:text-xl">
+              <p className="font-serif text-[17px] font-semibold leading-[1.1] tracking-[-0.02em] sm:text-xl md:text-[22px]">
                 Economics Students Association
               </p>
-              <p className="hidden text-[13px] leading-tight text-muted-foreground sm:block">
+              <p className="label mt-1 hidden text-muted-foreground sm:block">
                 Non Scholae Sed Vitae Discimu
               </p>
             </div>
           </Link>
           <Link href="/dashboard" className="hidden sm:inline-flex">
-            <Button className="gap-2">
+            <Button size="lg" className="gap-2">
               Open Dashboard
               <ArrowRight className="h-4 w-4" />
             </Button>

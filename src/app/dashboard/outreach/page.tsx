@@ -9,7 +9,10 @@ import {
   Users,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/page-header";
+import { EmptyState } from "@/components/empty-state";
 import { outreachEvents } from "@/lib/data";
+import { statusTone } from "@/lib/status";
 
 const typeLabels: Record<string, string> = {
   workshop: "Workshop",
@@ -19,18 +22,10 @@ const typeLabels: Record<string, string> = {
   networking: "Networking",
 };
 
-const typeStyles: Record<string, string> = {
-  workshop: "bg-violet-100 text-violet-800",
-  seminar: "bg-blue-100 text-blue-800",
-  "community-service": "bg-emerald-100 text-emerald-800",
-  research: "bg-amber-100 text-amber-800",
-  networking: "bg-rose-100 text-rose-800",
-};
-
 const statusStyles: Record<string, string> = {
-  upcoming: "bg-blue-100 text-blue-800",
-  ongoing: "bg-emerald-100 text-emerald-800",
-  completed: "bg-stone-100 text-stone-700",
+  upcoming: statusTone.info,
+  ongoing: statusTone.positive,
+  completed: statusTone.quiet,
 };
 
 export default function OutreachPage() {
@@ -52,31 +47,23 @@ export default function OutreachPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-bold sm:text-3xl">Community Outreach</h1>
-        <p className="mt-2 text-muted-foreground">
-          Workshops, seminars, research activities, community service, and
-          networking events organized by ESA to equip members with knowledge and
-          contribute to Liberia&apos;s development.
-        </p>
-      </header>
+      <PageHeader
+        title="Community Outreach"
+        description="Workshops, seminars, research activities, community service, and networking events organized by ESA to equip members with knowledge and contribute to Liberia's development."
+      />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">{upcoming.length}</p>
-          <p className="mt-1 text-sm text-muted-foreground">Upcoming Events</p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">{upcoming.length}</p>
+          <p className="label mt-2 text-muted-foreground">Upcoming events</p>
         </div>
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">{completed.length}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Completed Events
-          </p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">{completed.length}</p>
+          <p className="label mt-2 text-muted-foreground">Completed events</p>
         </div>
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">{totalParticipants}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Total Participants
-          </p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">{totalParticipants}</p>
+          <p className="label mt-2 text-muted-foreground">Total participants</p>
         </div>
       </div>
 
@@ -87,7 +74,7 @@ export default function OutreachPage() {
           className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             filterType === "all"
               ? "bg-primary text-primary-foreground"
-              : "border bg-card text-muted-foreground hover:bg-secondary"
+              : "bg-card text-muted-foreground ring-1 ring-border hover:bg-secondary"
           }`}
         >
           All
@@ -100,7 +87,7 @@ export default function OutreachPage() {
             className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
               filterType === type
                 ? "bg-primary text-primary-foreground"
-                : "border bg-card text-muted-foreground hover:bg-secondary"
+                : "bg-card text-muted-foreground ring-1 ring-border hover:bg-secondary"
             }`}
           >
             {typeLabels[type]}
@@ -114,19 +101,19 @@ export default function OutreachPage() {
             {filtered.map((event) => (
               <article
                 key={event.id}
-                className="rounded-lg border bg-card p-5"
+                className="rounded-lg bg-card p-5 ring-1 ring-border"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge className={statusStyles[event.status]}>
+                      <Badge className={`label ${statusStyles[event.status]}`}>
                         {event.status}
                       </Badge>
-                      <Badge className={typeStyles[event.type]}>
+                      <Badge variant="outline" className="label">
                         {typeLabels[event.type]}
                       </Badge>
                     </div>
-                    <h3 className="mt-3 font-serif text-xl font-semibold leading-snug">
+                    <h3 className="mt-3 text-xl font-semibold leading-snug tracking-[-0.015em]">
                       {event.title}
                     </h3>
                     <p className="mt-2 leading-relaxed text-muted-foreground">
@@ -142,7 +129,7 @@ export default function OutreachPage() {
                       strokeWidth={1.75}
                       aria-hidden="true"
                     />
-                    {event.date}
+                    <span className="figure">{event.date}</span>
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Clock
@@ -150,7 +137,7 @@ export default function OutreachPage() {
                       strokeWidth={1.75}
                       aria-hidden="true"
                     />
-                    {event.time}
+                    <span className="figure">{event.time}</span>
                   </span>
                   <span className="flex items-center gap-1.5">
                     <MapPin
@@ -169,11 +156,14 @@ export default function OutreachPage() {
                       strokeWidth={1.75}
                       aria-hidden="true"
                     />
-                    {event.enrolled}/{event.capacity} enrolled
+                    <span className="figure">
+                      {event.enrolled}/{event.capacity}
+                    </span>{" "}
+                    enrolled
                   </div>
-                  <div className="h-2 flex-1 rounded-full bg-secondary">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
                     <div
-                      className="h-2 rounded-full bg-accent transition-all"
+                      className="h-2 rounded-full bg-brand transition-all"
                       style={{
                         width: `${Math.min(100, (event.enrolled / event.capacity) * 100)}%`,
                       }}
@@ -188,17 +178,11 @@ export default function OutreachPage() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center rounded-lg border bg-card py-16 text-center">
-            <Globe
-              className="h-10 w-10 text-muted-foreground/40"
-              strokeWidth={1.5}
-              aria-hidden="true"
-            />
-            <p className="mt-4 text-lg font-medium">No events found</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Try adjusting your filter.
-            </p>
-          </div>
+          <EmptyState
+            icon={Globe}
+            title="No events found"
+            description="Try adjusting your filter."
+          />
         )}
       </div>
     </div>

@@ -17,6 +17,7 @@ import {
   User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Star } from "@/components/star-mark";
 import { useState, useEffect, useRef } from "react";
 
 const navItems = [
@@ -29,6 +30,20 @@ const navItems = [
   { href: "/dashboard/mentorship", label: "Mentorship", icon: Users },
   { href: "/dashboard/outreach", label: "Outreach", icon: Globe },
 ];
+
+function Monogram({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "label flex items-center justify-center rounded-sm bg-sidebar-accent text-sidebar-accent-foreground",
+        className
+      )}
+    >
+      ESA
+    </span>
+  );
+}
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -48,28 +63,30 @@ export function Sidebar() {
 
   return (
     <>
-      <div className={cn(
-        "fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-card px-4 shadow-sm transition-transform duration-300 md:hidden",
-        headerVisible ? "translate-y-0" : "-translate-y-full"
-      )}>
+      <div
+        className={cn(
+          "fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-card px-4 transition-transform duration-300 md:hidden",
+          headerVisible ? "translate-y-0" : "-translate-y-full"
+        )}
+      >
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation menu"
-          className="flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-secondary"
+          className="flex h-9 w-9 items-center justify-center rounded-sm transition-colors hover:bg-secondary"
         >
           <Menu className="h-5 w-5" />
         </button>
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded bg-primary">
-            <span className="text-[10px] font-bold text-primary-foreground">ESA</span>
-          </div>
-          <span className="text-sm font-semibold">ESA Platform</span>
+        <Link href="/dashboard" className="flex items-center gap-2.5">
+          <Monogram className="h-7 w-8 !text-[9px] bg-brand text-brand-foreground" />
+          <span className="font-serif text-[15px] font-semibold tracking-[-0.02em]">
+            ESA Platform
+          </span>
         </Link>
       </div>
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/30 md:hidden"
+          className="fixed inset-0 z-40 bg-foreground/40 md:hidden"
           onClick={() => setMobileOpen(false)}
           aria-hidden="true"
         />
@@ -84,16 +101,12 @@ export function Sidebar() {
       >
         <div className="flex items-center justify-between px-5 py-5">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded bg-sidebar-primary">
-              <span className="text-sm font-bold text-sidebar-primary-foreground">
-                ESA
-              </span>
-            </div>
+            <Monogram className="h-9 w-10" />
             <div>
-              <p className="text-[15px] font-semibold leading-tight">
+              <p className="font-serif text-base font-semibold leading-tight tracking-[-0.02em]">
                 ESA Platform
               </p>
-              <p className="text-[13px] leading-tight text-sidebar-foreground/50">
+              <p className="label mt-0.5 leading-tight text-sidebar-foreground/45">
                 Stella Maris Poly
               </p>
             </div>
@@ -101,7 +114,7 @@ export function Sidebar() {
           <button
             onClick={() => setMobileOpen(false)}
             aria-label="Close navigation menu"
-            className="rounded p-1 hover:bg-sidebar-accent md:hidden"
+            className="rounded-sm p-1 hover:bg-sidebar-accent md:hidden"
           >
             <X className="h-5 w-5" />
           </button>
@@ -109,7 +122,7 @@ export function Sidebar() {
 
         <div className="mx-5 border-t border-sidebar-border" />
 
-        <ul className="flex-1 space-y-1 overflow-y-auto px-3 py-4" role="list">
+        <ul className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4" role="list">
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -121,12 +134,15 @@ export function Sidebar() {
                   onClick={() => setMobileOpen(false)}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2.5 text-[15px] transition-colors",
+                    "relative flex items-center gap-3 rounded-sm py-2.5 pl-7 pr-3 text-[15px] transition-colors",
                     isActive
                       ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground/60 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
+                      : "text-sidebar-foreground/55 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
                   )}
                 >
+                  {isActive && (
+                    <Star className="absolute left-2 top-1/2 -translate-y-1/2 text-sidebar-primary" />
+                  )}
                   <item.icon className="h-5 w-5 shrink-0" strokeWidth={1.75} />
                   {item.label}
                 </Link>
@@ -141,7 +157,7 @@ export function Sidebar() {
           <Link
             href="/"
             onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-3 rounded-md px-3 py-2.5 text-[15px] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
+            className="flex items-center gap-3 rounded-sm py-2.5 pl-7 pr-3 text-[15px] text-sidebar-foreground/55 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
           >
             <Home className="h-5 w-5 shrink-0" strokeWidth={1.75} />
             Home
@@ -154,7 +170,7 @@ export function Sidebar() {
           <Link
             href="/dashboard/profile"
             onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-3 rounded-md px-2 py-1 transition-colors hover:bg-sidebar-accent/60"
+            className="flex items-center gap-3 rounded-sm px-2 py-1.5 transition-colors hover:bg-sidebar-accent/50"
           >
             <div
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sidebar-accent text-sidebar-accent-foreground"
@@ -164,6 +180,9 @@ export function Sidebar() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-[14px] font-medium">Member</p>
+              <p className="label leading-tight text-sidebar-foreground/45">
+                View profile
+              </p>
             </div>
           </Link>
         </div>

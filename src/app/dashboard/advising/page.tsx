@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   GraduationCap,
   MapPin,
@@ -11,7 +10,10 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
+import { EmptyState } from "@/components/empty-state";
 import { advisingSessions } from "@/lib/data";
+import { statusTone } from "@/lib/status";
 
 const typeLabels: Record<string, string> = {
   "course-planning": "Course Planning",
@@ -20,17 +22,22 @@ const typeLabels: Record<string, string> = {
   "career-guidance": "Career Guidance",
 };
 
-const typeStyles: Record<string, string> = {
-  "course-planning": "bg-blue-100 text-blue-800",
-  registration: "bg-violet-100 text-violet-800",
-  "academic-support": "bg-amber-100 text-amber-800",
-  "career-guidance": "bg-emerald-100 text-emerald-800",
-};
-
 const statusConfig = {
-  scheduled: { label: "Scheduled", className: "bg-blue-100 text-blue-800", icon: CalendarDays },
-  completed: { label: "Completed", className: "bg-emerald-100 text-emerald-800", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", className: "bg-red-100 text-red-800", icon: XCircle },
+  scheduled: {
+    label: "Scheduled",
+    className: statusTone.info,
+    icon: CalendarDays,
+  },
+  completed: {
+    label: "Completed",
+    className: statusTone.positive,
+    icon: CheckCircle2,
+  },
+  cancelled: {
+    label: "Cancelled",
+    className: statusTone.critical,
+    icon: XCircle,
+  },
 };
 
 export default function AdvisingPage() {
@@ -41,35 +48,25 @@ export default function AdvisingPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-bold sm:text-3xl">Academic Advising</h1>
-        <p className="mt-2 text-muted-foreground">
-          Get help with course planning, registration, and navigating university
-          procedures. ESA volunteers and faculty advisors are here to support
-          you.
-        </p>
-      </header>
+      <PageHeader
+        title="Academic Advising"
+        description="Get help with course planning, registration, and navigating university procedures. ESA volunteers and faculty advisors are here to support you."
+      />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">{upcoming.length}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Upcoming Sessions
-          </p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">{upcoming.length}</p>
+          <p className="label mt-2 text-muted-foreground">Upcoming sessions</p>
         </div>
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">
             {past.filter((s) => s.status === "completed").length}
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Completed Sessions
-          </p>
+          <p className="label mt-2 text-muted-foreground">Completed sessions</p>
         </div>
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">4</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Available Advisors
-          </p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">4</p>
+          <p className="label mt-2 text-muted-foreground">Available advisors</p>
         </div>
       </div>
 
@@ -89,7 +86,7 @@ export default function AdvisingPage() {
               ))}
             </div>
           ) : (
-            <EmptyState />
+            <NoSessions />
           )}
         </TabsContent>
 
@@ -101,7 +98,7 @@ export default function AdvisingPage() {
               ))}
             </div>
           ) : (
-            <EmptyState />
+            <NoSessions />
           )}
         </TabsContent>
       </Tabs>
@@ -118,19 +115,21 @@ function SessionCard({
   const StatusIcon = status.icon;
 
   return (
-    <article className="rounded-lg border bg-card p-5">
+    <article className="rounded-lg bg-card p-5 ring-1 ring-border">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge className={status.className}>
+            <Badge className={`label ${status.className}`}>
               <StatusIcon className="mr-1 h-3 w-3" />
               {status.label}
             </Badge>
-            <Badge className={typeStyles[session.type]}>
+            <Badge variant="outline" className="label">
               {typeLabels[session.type]}
             </Badge>
           </div>
-          <h3 className="mt-3 font-semibold">{session.advisorName}</h3>
+          <h3 className="mt-3 text-lg font-semibold tracking-[-0.015em]">
+            {session.advisorName}
+          </h3>
           <p className="text-sm text-muted-foreground">
             {session.advisorRole}
           </p>
@@ -143,7 +142,7 @@ function SessionCard({
             strokeWidth={1.75}
             aria-hidden="true"
           />
-          {session.date}
+          <span className="figure">{session.date}</span>
         </span>
         <span className="flex items-center gap-1.5">
           <Clock
@@ -151,7 +150,7 @@ function SessionCard({
             strokeWidth={1.75}
             aria-hidden="true"
           />
-          {session.time}
+          <span className="figure">{session.time}</span>
         </span>
         <span className="flex items-center gap-1.5">
           <MapPin
@@ -171,18 +170,12 @@ function SessionCard({
   );
 }
 
-function EmptyState() {
+function NoSessions() {
   return (
-    <div className="flex flex-col items-center rounded-lg border bg-card py-16 text-center">
-      <GraduationCap
-        className="h-10 w-10 text-muted-foreground/40"
-        strokeWidth={1.5}
-        aria-hidden="true"
-      />
-      <p className="mt-4 text-lg font-medium">No sessions found</p>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Visit the ESA office to schedule an advising session.
-      </p>
-    </div>
+    <EmptyState
+      icon={GraduationCap}
+      title="No sessions found"
+      description="Visit the ESA office to schedule an advising session."
+    />
   );
 }

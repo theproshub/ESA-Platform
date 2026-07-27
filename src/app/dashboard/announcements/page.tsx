@@ -9,13 +9,6 @@ import { PriorityBadge } from "@/components/priority-badge";
 import { EmptyState } from "@/components/empty-state";
 import { announcements } from "@/lib/data";
 
-const categoryStyles: Record<string, string> = {
-  Meeting: "bg-violet-100 text-violet-800",
-  Finance: "bg-emerald-100 text-emerald-800",
-  Academic: "bg-blue-100 text-blue-800",
-  Events: "bg-amber-100 text-amber-800",
-};
-
 function timeAgo(dateString: string): string {
   const date = new Date(dateString);
   const now = new Date();
@@ -72,7 +65,7 @@ export default function AnnouncementsPage() {
             className={`rounded-md px-2.5 py-2 text-[13px] font-medium transition-colors sm:px-3 sm:text-sm ${
               categoryFilter === "all"
                 ? "bg-primary text-primary-foreground"
-                : "border bg-card text-muted-foreground hover:bg-secondary"
+                : "bg-card text-muted-foreground ring-1 ring-border hover:bg-secondary"
             }`}
           >
             All
@@ -85,7 +78,7 @@ export default function AnnouncementsPage() {
               className={`rounded-md px-2.5 py-2 text-[13px] font-medium transition-colors sm:px-3 sm:text-sm ${
                 categoryFilter === cat
                   ? "bg-primary text-primary-foreground"
-                  : "border bg-card text-muted-foreground hover:bg-secondary"
+                  : "bg-card text-muted-foreground ring-1 ring-border hover:bg-secondary"
               }`}
             >
               {cat}
@@ -100,35 +93,30 @@ export default function AnnouncementsPage() {
             {filtered.map((ann) => (
               <article
                 key={ann.id}
-                className="rounded-lg border bg-card p-3.5 sm:p-5"
+                className="rounded-lg bg-card p-3.5 ring-1 ring-border sm:p-5"
               >
                 <div className="flex items-start justify-between gap-2 sm:gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                       <PriorityBadge priority={ann.priority} />
-                      <Badge
-                        className={`text-[11px] sm:text-xs ${
-                          categoryStyles[ann.category] ||
-                          "bg-stone-100 text-stone-700"
-                        }`}
-                      >
+                      <Badge variant="outline" className="label">
                         {ann.category}
                       </Badge>
                     </div>
-                    <h3 className="mt-2 font-serif text-base font-semibold leading-snug sm:mt-3 sm:text-xl">
+                    <h3 className="mt-2.5 text-lg font-semibold leading-snug tracking-[-0.015em] sm:mt-3 sm:text-xl">
                       {ann.title}
                     </h3>
                     <p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground sm:mt-2 sm:text-base">
                       {ann.content}
                     </p>
                   </div>
-                  <time className="shrink-0 text-[12px] text-muted-foreground sm:text-sm">
+                  <time className="figure shrink-0 text-[12px] text-muted-foreground sm:text-[13px]">
                     {timeAgo(ann.createdAt)}
                   </time>
                 </div>
                 <footer className="mt-3 flex items-center gap-2 border-t pt-2.5 text-[13px] text-muted-foreground sm:mt-4 sm:pt-3 sm:text-sm">
                   <div
-                    className="flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-[10px] font-semibold sm:h-6 sm:w-6 sm:text-xs"
+                    className="figure flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-[10px] font-semibold sm:h-6 sm:w-6 sm:text-xs"
                     aria-hidden="true"
                   >
                     {ann.author[0]}

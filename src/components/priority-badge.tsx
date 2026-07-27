@@ -1,12 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { statusTone } from "@/lib/status";
 import type { Announcement } from "@/lib/types";
 
 const priorityStyles: Record<Announcement["priority"], string> = {
-  urgent: "bg-red-100 text-red-800",
-  high: "bg-amber-100 text-amber-800",
-  medium: "bg-blue-100 text-blue-800",
-  low: "bg-stone-100 text-stone-700",
+  urgent: statusTone.critical,
+  high: statusTone.attention,
+  medium: statusTone.info,
+  low: statusTone.quiet,
 };
 
 export function PriorityBadge({
@@ -17,9 +18,7 @@ export function PriorityBadge({
   className?: string;
 }) {
   return (
-    <Badge
-      className={cn("text-[11px] sm:text-xs", priorityStyles[priority], className)}
-    >
+    <Badge className={cn("label", priorityStyles[priority], className)}>
       {priority}
     </Badge>
   );

@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SectionMark } from "@/components/star-mark";
+import { IsLmPlot } from "@/components/is-lm-plot";
 
 const features = [
   {
@@ -95,27 +97,39 @@ const services = [
   },
 ];
 
-// Placeholder alumni testimonials — replace with real quotes before launch.
+const stats = [
+  { value: "500+", label: "Active members" },
+  { value: "50", label: "Courses listed" },
+  { value: "12", label: "Committees" },
+  { value: "98%", label: "Satisfaction rate" },
+];
+
+// Placeholder alumni testimonials. Names, quotes, and sectors are invented and
+// must be replaced with real, signed-off quotes before launch. Employers are
+// deliberately unnamed — do not attach a real institution to an invented quote.
 const testimonials = [
   {
     quote:
-      "The rigour of the economics programme — and the resources the association shared — gave me a real edge when I moved into financial analysis. I lean on those foundations every day.",
+      "Four years into the job, the econometrics I first practised in ESA study circles is what I use to price risk every week. I walked into my first day already knowing how to defend a number.",
     name: "Aminata Konneh",
-    role: "Financial Analyst · Class of 2021",
+    role: "Financial Analyst",
+    detail: "Commercial banking · Class of 2021",
     initials: "AK",
   },
   {
     quote:
-      "Staying organised with my course load and connecting through ESA shaped how I work today as a research economist. It set me up for the role.",
+      "I went straight from my final symposium paper into a full-time research post. The habit of writing, presenting, and taking hard questions in front of peers is the whole job now.",
     name: "Emmanuel Tarr",
-    role: "Research Economist · Class of 2020",
+    role: "Research Economist",
+    detail: "Central banking · Class of 2020",
     initials: "ET",
   },
   {
     quote:
-      "The mentorship I found through the association led to my first job offer. Years on, I'm still grateful for the network it opened up.",
+      "My ESA mentor introduced me to the team I now work with permanently. Six years on, I still bring students from the association in for attachments — the network runs both ways.",
     name: "Grace Wesseh",
-    role: "Policy Analyst · Class of 2022",
+    role: "Policy Analyst",
+    detail: "Public sector · Class of 2022",
     initials: "GW",
   },
 ];
@@ -126,52 +140,41 @@ export default function HomePage() {
       <SiteHeader />
 
       <main id="main-content">
-        <section className="relative isolate overflow-hidden bg-primary px-4 py-16 sm:px-6 md:py-28">
-          {/* Radial glow behind the crest */}
+        <section className="relative isolate overflow-hidden bg-brand px-4 pb-28 pt-12 sm:px-6 md:pb-40 md:pt-16">
+          {/* The crest's own IS–LM diagram, redrawn across the foot of the band. */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-8 h-60 w-60 -translate-x-1/2 rounded-full sm:top-14 sm:h-80 sm:w-80"
-            style={{
-              background:
-                "radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent) 0%, transparent 70%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-3xl text-center">
-            <div className="relative mx-auto flex h-28 w-28 items-center justify-center sm:h-36 sm:w-36">
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 rounded-full bg-white/[0.07] ring-1 ring-white/15 backdrop-blur-sm"
-              />
-              <Image
-                src="/esa-logo.png"
-                alt="Economics Students Association crest"
-                width={144}
-                height={168}
-                priority
-                quality={100}
-                className="relative h-20 w-auto object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.4)] sm:h-24"
-              />
-            </div>
-            <p className="mt-6 text-[11px] font-medium uppercase tracking-[0.22em] text-primary-foreground/50 sm:mt-8 sm:text-xs">
+            className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto w-full max-w-5xl px-4 text-white/40 sm:px-6"
+          >
+            <IsLmPlot />
+          </div>
+
+          <div className="relative z-10 mx-auto max-w-3xl text-center">
+            <Image
+              src="/esa-logo.png"
+              alt="Economics Students Association crest"
+              width={144}
+              height={168}
+              priority
+              quality={100}
+              className="mx-auto h-16 w-auto object-contain drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] sm:h-24"
+            />
+            <p className="label mt-6 text-brand-foreground/50 sm:mt-7">
               Stella Maris Polytechnic University
             </p>
-            <div
-              aria-hidden="true"
-              className="mx-auto mt-4 h-px w-12 bg-gradient-to-r from-transparent via-accent to-transparent"
-            />
-            <h1 className="mt-4 text-3xl font-bold text-primary-foreground sm:mt-5 sm:text-4xl md:text-5xl">
+            <h1 className="mt-5 text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-brand-foreground sm:text-[52px] md:text-[58px]">
               Economics Students Association
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-primary-foreground/70 sm:mt-6 sm:text-lg">
-              Your academic companion. Access courses, schedules,
-              and association resources — all in one place.
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-brand-foreground/70 sm:mt-7 sm:text-lg">
+              Your academic companion. Access courses, schedules, and
+              association resources — all in one place.
             </p>
-            <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center">
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:justify-center">
               <Link href="/dashboard/courses">
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="w-full gap-2 text-base font-semibold sm:w-auto"
+                  className="w-full gap-2 font-semibold sm:w-auto"
                 >
                   <BookOpen className="h-4 w-4" />
                   View Courses
@@ -181,7 +184,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="w-full gap-2 text-base text-primary-foreground/70 hover:bg-white/10 hover:text-primary-foreground sm:w-auto"
+                  className="w-full gap-2 text-brand-foreground/75 hover:bg-white/10 hover:text-brand-foreground sm:w-auto"
                 >
                   <CalendarDays className="h-4 w-4" />
                   Academic Schedule
@@ -191,42 +194,42 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="border-b bg-card px-4 py-10 sm:px-6 sm:py-14">
-          <div className="mx-auto grid max-w-4xl grid-cols-2 gap-6 sm:gap-y-8 md:grid-cols-4">
-            {[
-              { value: "500+", label: "Active Members" },
-              { value: "50", label: "Courses Listed" },
-              { value: "12", label: "Committees" },
-              { value: "98%", label: "Satisfaction Rate" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="font-serif text-2xl font-bold text-foreground sm:text-3xl">
+        {/* Read as a row of a statistical table: figures set in mono, ruled off. */}
+        <section
+          aria-label="Association at a glance"
+          className="border-y bg-card px-4 py-10 sm:px-6 sm:py-12"
+        >
+          <dl className="mx-auto grid max-w-4xl grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-y-0 md:divide-x md:divide-border">
+            {stats.map((stat) => (
+              <div key={stat.label} className="px-2 text-center">
+                <dd className="figure text-[32px] font-semibold leading-none sm:text-[40px]">
                   {stat.value}
-                </p>
-                <p className="mt-1 text-[13px] text-muted-foreground sm:text-sm">
+                </dd>
+                <dt className="label mt-2.5 text-muted-foreground">
                   {stat.label}
-                </p>
+                </dt>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
 
-        <section id="features" className="px-4 py-14 sm:px-6 md:py-24">
+        <section id="features" className="px-4 py-16 sm:px-6 md:py-24">
           <div className="mx-auto max-w-5xl">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-bold sm:text-3xl">
+              <SectionMark>The platform</SectionMark>
+              <h2 className="mt-5 text-[30px] font-semibold tracking-[-0.025em] sm:text-[38px]">
                 What the platform offers
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
-                Built to serve the practical needs of economics students
-                and the association&apos;s day-to-day operations.
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Built to serve the practical needs of economics students and the
+                association&apos;s day-to-day operations.
               </p>
             </div>
-            <div className="mx-auto mt-10 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
+            <div className="mx-auto mt-12 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
               {features.map((feature) => (
                 <article
                   key={feature.title}
-                  className="group overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-md"
+                  className="group overflow-hidden rounded-xl bg-card ring-1 ring-border transition-colors hover:ring-foreground/25"
                 >
                   <div className="relative aspect-[3/2] overflow-hidden bg-secondary">
                     <Image
@@ -234,21 +237,21 @@ export default function HomePage() {
                       alt=""
                       fill
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-5">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       <feature.icon
-                        className="h-5 w-5 shrink-0 text-accent"
+                        className="h-[18px] w-[18px] shrink-0 text-brand"
                         strokeWidth={1.75}
                         aria-hidden="true"
                       />
-                      <h3 className="font-serif text-lg font-semibold sm:text-xl">
+                      <h3 className="text-lg font-semibold tracking-[-0.015em] sm:text-xl">
                         {feature.title}
                       </h3>
                     </div>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+                    <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
                       {feature.description}
                     </p>
                   </div>
@@ -258,45 +261,49 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="bg-primary px-4 py-14 sm:px-6 md:py-24">
+        <section className="bg-brand px-4 py-16 sm:px-6 md:py-24">
           <div className="mx-auto max-w-5xl">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-bold text-primary-foreground sm:text-3xl">
+              <SectionMark tone="brand">Alumni</SectionMark>
+              <h2 className="mt-5 text-[30px] font-semibold tracking-[-0.025em] text-brand-foreground sm:text-[38px]">
                 From students to professionals
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-primary-foreground/70 sm:mt-4 sm:text-lg">
-                Hear from graduates now building careers in economics, finance,
-                and policy.
+              <p className="mt-4 text-base leading-relaxed text-brand-foreground/70 sm:text-lg">
+                Graduates of the programme, now in full-time roles across
+                economics, finance, and policy.
               </p>
             </div>
-            <div className="mx-auto mt-10 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-3">
+            <div className="mx-auto mt-12 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-3">
               {testimonials.map((testimonial) => (
                 <figure
                   key={testimonial.name}
-                  className="flex flex-col rounded-xl border border-white/10 bg-white/[0.04] p-6"
+                  className="flex flex-col rounded-xl bg-white/[0.04] p-6 ring-1 ring-brand-rule"
                 >
                   <span
-                    className="font-serif text-4xl leading-none text-accent"
+                    className="font-serif text-5xl leading-none text-brand-foreground/20"
                     aria-hidden="true"
                   >
                     &ldquo;
                   </span>
-                  <blockquote className="mt-2 flex-1 text-[15px] leading-relaxed text-primary-foreground/85">
+                  <blockquote className="mt-1 flex-1 text-[15px] leading-relaxed text-brand-foreground/85">
                     {testimonial.quote}
                   </blockquote>
-                  <figcaption className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+                  <figcaption className="mt-6 flex items-center gap-3 border-t border-brand-rule pt-5">
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-sm font-semibold text-primary-foreground"
+                      className="figure flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-[13px] font-semibold text-brand-foreground"
                       aria-hidden="true"
                     >
                       {testimonial.initials}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-primary-foreground">
+                      <p className="truncate text-sm font-medium text-brand-foreground">
                         {testimonial.name}
                       </p>
-                      <p className="text-[13px] text-primary-foreground/60">
+                      <p className="text-[13px] text-brand-foreground/60">
                         {testimonial.role}
+                      </p>
+                      <p className="mt-0.5 text-[12px] leading-snug text-brand-foreground/45">
+                        {testimonial.detail}
                       </p>
                     </div>
                   </figcaption>
@@ -308,24 +315,25 @@ export default function HomePage() {
 
         <section
           id="support"
-          className="border-t bg-secondary/30 px-4 py-14 sm:px-6 md:py-24"
+          className="border-t bg-secondary/40 px-4 py-16 sm:px-6 md:py-24"
         >
           <div className="mx-auto max-w-5xl">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-bold sm:text-3xl">
+              <SectionMark>Support</SectionMark>
+              <h2 className="mt-5 text-[30px] font-semibold tracking-[-0.025em] sm:text-[38px]">
                 Student support &amp; community
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Beyond the classroom — support and opportunities to help you
                 thrive throughout your studies.
               </p>
             </div>
-            <div className="mx-auto mt-10 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto mt-12 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-4">
               {services.map((service) => (
                 <Link
                   key={service.title}
                   href={service.href}
-                  className="group overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-md"
+                  className="group overflow-hidden rounded-xl bg-card ring-1 ring-border transition-colors hover:ring-foreground/25"
                 >
                   <div className="relative aspect-[3/2] overflow-hidden bg-secondary">
                     <Image
@@ -333,21 +341,21 @@ export default function HomePage() {
                       alt=""
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-5">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       <service.icon
-                        className="h-5 w-5 shrink-0 text-accent"
+                        className="h-[18px] w-[18px] shrink-0 text-brand"
                         strokeWidth={1.75}
                         aria-hidden="true"
                       />
-                      <h3 className="font-serif text-lg font-semibold sm:text-xl">
+                      <h3 className="text-lg font-semibold tracking-[-0.015em] sm:text-xl">
                         {service.title}
                       </h3>
                     </div>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+                    <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
                       {service.description}
                     </p>
                   </div>
@@ -357,21 +365,26 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="about" className="border-t bg-primary px-4 py-14 sm:px-6 sm:py-20">
+        <section
+          id="about"
+          className="border-t bg-brand px-4 py-16 sm:px-6 sm:py-24"
+        >
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold text-primary-foreground sm:text-3xl">
-              Join the Association
+            <SectionMark tone="brand">Membership</SectionMark>
+            <h2 className="mt-5 text-[30px] font-semibold tracking-[-0.025em] text-brand-foreground sm:text-[38px]">
+              Join the association
             </h2>
-            <p className="mt-3 text-base leading-relaxed text-primary-foreground/70 sm:mt-4 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-brand-foreground/70 sm:text-lg">
               Become a verified member to access your digital membership card,
-              stay informed with announcements, and connect with the economics community.
+              stay informed with announcements, and connect with the economics
+              community.
             </p>
-            <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center">
+            <div className="mt-9 flex flex-col items-stretch gap-3 sm:mt-11 sm:flex-row sm:items-center sm:justify-center">
               <Link href="/dashboard/membership">
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="w-full gap-2 text-base font-semibold sm:w-auto"
+                  className="w-full gap-2 font-semibold sm:w-auto"
                 >
                   <CreditCard className="h-4 w-4" />
                   Membership Card
@@ -381,7 +394,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="w-full gap-2 text-base text-primary-foreground/70 hover:bg-white/10 hover:text-primary-foreground sm:w-auto"
+                  className="w-full gap-2 text-brand-foreground/75 hover:bg-white/10 hover:text-brand-foreground sm:w-auto"
                 >
                   <Megaphone className="h-4 w-4" />
                   Announcements

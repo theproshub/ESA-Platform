@@ -65,10 +65,10 @@ export default function DashboardPage() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="group flex flex-col items-center gap-2 rounded-lg border bg-card p-3.5 text-center transition-colors hover:bg-secondary/60 sm:flex-row sm:items-start sm:gap-4 sm:p-4 sm:text-left"
+                className="group flex flex-col items-center gap-2 rounded-lg bg-card p-3.5 text-center ring-1 ring-border transition-colors hover:bg-secondary/60 sm:flex-row sm:items-start sm:gap-4 sm:p-4 sm:text-left"
               >
                 <link.icon
-                  className="h-5 w-5 shrink-0 text-accent"
+                  className="h-5 w-5 shrink-0 text-brand"
                   strokeWidth={1.75}
                   aria-hidden="true"
                 />
@@ -87,12 +87,12 @@ export default function DashboardPage() {
       <div className="grid gap-6 sm:gap-8 lg:grid-cols-5">
         <section className="lg:col-span-2" aria-labelledby="semester-load-heading">
           <div className="flex items-baseline justify-between">
-            <h2 id="semester-load-heading" className="text-lg font-bold sm:text-xl">
+            <h2 id="semester-load-heading" className="text-xl font-semibold tracking-[-0.015em] sm:text-2xl">
               This Semester
             </h2>
             <Link
               href="/dashboard/schedule"
-              className="flex items-center gap-1 text-[13px] font-medium text-accent hover:underline sm:text-sm"
+              className="flex items-center gap-1 text-[13px] font-medium text-brand transition-colors hover:text-accent sm:text-sm"
             >
               View all
               <ArrowRight className="h-3.5 w-3.5" />
@@ -103,31 +103,30 @@ export default function DashboardPage() {
               studentCourses.map((course) => (
                 <div
                   key={course.id}
-                  className="flex items-center gap-3 rounded-lg border bg-card p-3 sm:gap-4 sm:p-4"
+                  className="flex items-center gap-3 rounded-lg bg-card p-3 ring-1 ring-border sm:gap-4 sm:p-4"
                 >
                   <div
-                    className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-md bg-secondary"
+                    className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-md bg-secondary"
                     aria-hidden="true"
                   >
-                    <span className="text-sm font-bold leading-none sm:text-base">
+                    <span className="figure text-base font-semibold leading-none">
                       {course.creditHours}
                     </span>
-                    <span className="mt-0.5 text-[9px] uppercase tracking-wide text-muted-foreground">
-                      cr
-                    </span>
+                    <span className="label mt-0.5 !text-[9px] text-muted-foreground">cr</span>
                   </div>
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold sm:text-base">
                       {course.name}
                     </p>
-                    <p className="text-[13px] text-muted-foreground sm:text-sm">
-                      {course.code} · {course.department}
+                    <p className="mt-0.5 text-[13px] text-muted-foreground sm:text-sm">
+                      <span className="figure">{course.code}</span> ·{" "}
+                      {course.department}
                     </p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="rounded-lg border bg-card p-5 text-center text-sm text-muted-foreground sm:p-6">
+              <p className="rounded-lg bg-card p-5 text-center text-sm text-muted-foreground ring-1 ring-border sm:p-6">
                 No courses listed for this semester.
               </p>
             )}
@@ -136,12 +135,12 @@ export default function DashboardPage() {
 
         <section className="lg:col-span-3" aria-labelledby="announcements-heading">
           <div className="flex items-baseline justify-between">
-            <h2 id="announcements-heading" className="text-lg font-bold sm:text-xl">
+            <h2 id="announcements-heading" className="text-xl font-semibold tracking-[-0.015em] sm:text-2xl">
               Recent Announcements
             </h2>
             <Link
               href="/dashboard/announcements"
-              className="flex items-center gap-1 text-[13px] font-medium text-accent hover:underline sm:text-sm"
+              className="flex items-center gap-1 text-[13px] font-medium text-brand transition-colors hover:text-accent sm:text-sm"
             >
               View all
               <ArrowRight className="h-3.5 w-3.5" />
@@ -151,7 +150,7 @@ export default function DashboardPage() {
             {recentAnnouncements.map((ann) => (
               <article
                 key={ann.id}
-                className="rounded-lg border bg-card p-3 sm:p-4"
+                className="rounded-lg bg-card p-3 ring-1 ring-border sm:p-4"
               >
                 <div className="flex items-start justify-between gap-2 sm:gap-3">
                   <div className="min-w-0">
@@ -162,9 +161,7 @@ export default function DashboardPage() {
                   </div>
                   <PriorityBadge priority={ann.priority} className="shrink-0" />
                 </div>
-                <p className="mt-2 text-[11px] text-muted-foreground sm:mt-3 sm:text-xs">
-                  {ann.author}
-                </p>
+                <p className="label mt-3 text-muted-foreground">{ann.author}</p>
               </article>
             ))}
           </div>
@@ -173,7 +170,7 @@ export default function DashboardPage() {
 
       <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
         <section aria-labelledby="semester-heading">
-          <h2 id="semester-heading" className="text-lg font-bold sm:text-xl">
+          <h2 id="semester-heading" className="text-xl font-semibold tracking-[-0.015em] sm:text-2xl">
             Semester at a Glance
           </h2>
           <div className="mt-3 grid grid-cols-3 gap-2.5 sm:mt-4 sm:gap-4">
@@ -187,12 +184,10 @@ export default function DashboardPage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-lg border bg-card p-3.5 text-center sm:p-5"
+                className="rounded-lg bg-card p-3.5 text-center ring-1 ring-border sm:p-5"
               >
-                <p className="font-serif text-xl font-bold sm:text-2xl">{stat.value}</p>
-                <p className="mt-0.5 text-[12px] text-muted-foreground sm:mt-1 sm:text-sm">
-                  {stat.label}
-                </p>
+                <p className="figure text-2xl font-semibold sm:text-[28px]">{stat.value}</p>
+                <p className="label mt-2 text-muted-foreground">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -200,18 +195,18 @@ export default function DashboardPage() {
 
         {nextEvent && (
           <section aria-labelledby="upcoming-heading">
-            <h2 id="upcoming-heading" className="text-lg font-bold sm:text-xl">
+            <h2 id="upcoming-heading" className="text-xl font-semibold tracking-[-0.015em] sm:text-2xl">
               Upcoming
             </h2>
-            <div className="mt-3 rounded-lg border bg-card p-4 sm:mt-4 sm:p-5">
+            <div className="mt-3 rounded-lg bg-card p-4 ring-1 ring-border sm:mt-4 sm:p-5">
               <div className="flex items-start justify-between gap-2 sm:gap-3">
                 <div className="min-w-0">
                   <p className="text-sm font-semibold sm:text-base">{nextEvent.title}</p>
-                  <p className="mt-1 text-[13px] text-muted-foreground sm:text-sm">
+                  <p className="figure mt-1 text-[13px] text-muted-foreground">
                     {nextEvent.startDate} — {nextEvent.endDate}
                   </p>
                 </div>
-                <Badge variant="outline" className="shrink-0 capitalize">
+                <Badge variant="outline" className="label shrink-0">
                   {nextEvent.type}
                 </Badge>
               </div>

@@ -66,7 +66,7 @@ export default function AboutPage() {
 
       <div className="mx-auto max-w-3xl space-y-10 px-4 py-10 sm:space-y-12 sm:px-6 sm:py-14">
         <section>
-          <h2 className="font-serif text-xl font-semibold sm:text-2xl">
+          <h2 className="text-2xl font-semibold tracking-[-0.02em] sm:text-[28px]">
             Who we are
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
@@ -79,7 +79,7 @@ export default function AboutPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl font-semibold sm:text-2xl">
+          <h2 className="text-2xl font-semibold tracking-[-0.02em] sm:text-[28px]">
             Our mission
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
@@ -92,19 +92,19 @@ export default function AboutPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl font-semibold sm:text-2xl">
+          <h2 className="text-2xl font-semibold tracking-[-0.02em] sm:text-[28px]">
             What the platform offers
           </h2>
           <div className="mt-5 grid gap-5 sm:grid-cols-2">
             {offerings.map((item) => (
               <div key={item.title} className="flex gap-3">
                 <item.icon
-                  className="h-5 w-5 shrink-0 text-accent"
+                  className="h-5 w-5 shrink-0 text-brand"
                   strokeWidth={1.75}
                   aria-hidden="true"
                 />
                 <div>
-                  <h3 className="font-serif text-base font-semibold">
+                  <h3 className="text-base font-semibold tracking-[-0.01em]">
                     {item.title}
                   </h3>
                   <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground">
@@ -116,8 +116,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="rounded-xl border bg-card p-6 sm:p-8">
-          <h2 className="font-serif text-xl font-semibold sm:text-2xl">
+        <section className="rounded-xl bg-card p-6 ring-1 ring-border sm:p-8">
+          <h2 className="text-2xl font-semibold tracking-[-0.02em] sm:text-[28px]">
             Get involved
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">

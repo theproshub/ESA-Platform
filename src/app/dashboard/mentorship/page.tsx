@@ -5,12 +5,15 @@ import {
   Briefcase,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/page-header";
+import { EmptyState } from "@/components/empty-state";
 import { mentorshipMatches } from "@/lib/data";
+import { statusTone } from "@/lib/status";
 
 const statusStyles = {
-  active: "bg-emerald-100 text-emerald-800",
-  upcoming: "bg-blue-100 text-blue-800",
-  completed: "bg-stone-100 text-stone-700",
+  active: statusTone.positive,
+  upcoming: statusTone.info,
+  completed: statusTone.quiet,
 };
 
 export default function MentorshipPage() {
@@ -20,39 +23,31 @@ export default function MentorshipPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-bold sm:text-3xl">Mentorship Programs</h1>
-        <p className="mt-2 text-muted-foreground">
-          Connect with professionals, alumni, and industry leaders who guide
-          your academic and career journey. ESA partners with organizations
-          across Liberia to provide meaningful mentorship.
-        </p>
-      </header>
+      <PageHeader
+        title="Mentorship Programs"
+        description="Connect with professionals, alumni, and industry leaders who guide your academic and career journey. ESA partners with organizations across Liberia to provide meaningful mentorship."
+      />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold text-emerald-700">
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold text-positive">
             {active.length}
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">Active Mentors</p>
+          <p className="label mt-2 text-muted-foreground">Active mentors</p>
         </div>
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">{upcoming.length}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Upcoming Programs
-          </p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">{upcoming.length}</p>
+          <p className="label mt-2 text-muted-foreground">Upcoming programs</p>
         </div>
-        <div className="rounded-lg border bg-card p-5 text-center">
-          <p className="font-serif text-2xl font-bold">{completed.length}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Completed Programs
-          </p>
+        <div className="rounded-lg bg-card p-5 text-center ring-1 ring-border">
+          <p className="figure text-[28px] font-semibold">{completed.length}</p>
+          <p className="label mt-2 text-muted-foreground">Completed programs</p>
         </div>
       </div>
 
       {active.length > 0 && (
         <section aria-labelledby="active-heading">
-          <h2 id="active-heading" className="text-xl font-bold">
+          <h2 id="active-heading" className="text-xl font-semibold tracking-[-0.015em]">
             Active Mentorship
           </h2>
           <div className="mt-4 space-y-4">
@@ -65,7 +60,7 @@ export default function MentorshipPage() {
 
       {upcoming.length > 0 && (
         <section aria-labelledby="upcoming-heading">
-          <h2 id="upcoming-heading" className="text-xl font-bold">
+          <h2 id="upcoming-heading" className="text-xl font-semibold tracking-[-0.015em]">
             Upcoming Programs
           </h2>
           <div className="mt-4 space-y-4">
@@ -78,7 +73,7 @@ export default function MentorshipPage() {
 
       {completed.length > 0 && (
         <section aria-labelledby="completed-heading">
-          <h2 id="completed-heading" className="text-xl font-bold">
+          <h2 id="completed-heading" className="text-xl font-semibold tracking-[-0.015em]">
             Completed Programs
           </h2>
           <div className="mt-4 space-y-4">
@@ -90,17 +85,11 @@ export default function MentorshipPage() {
       )}
 
       {mentorshipMatches.length === 0 && (
-        <div className="flex flex-col items-center rounded-lg border bg-card py-16 text-center">
-          <Users
-            className="h-10 w-10 text-muted-foreground/40"
-            strokeWidth={1.5}
-            aria-hidden="true"
-          />
-          <p className="mt-4 text-lg font-medium">No mentorship matches yet</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Contact the ESA office to join a mentorship program.
-          </p>
-        </div>
+        <EmptyState
+          icon={Users}
+          title="No mentorship matches yet"
+          description="Contact the ESA office to join a mentorship program."
+        />
       )}
     </div>
   );
@@ -112,11 +101,11 @@ function MentorCard({
   match: (typeof mentorshipMatches)[number];
 }) {
   return (
-    <article className="rounded-lg border bg-card p-5">
+    <article className="rounded-lg bg-card p-5 ring-1 ring-border">
       <div className="flex items-start justify-between gap-4">
         <div className="flex gap-4">
           <div
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground"
+            className="figure flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-base font-semibold text-brand-foreground"
             aria-hidden="true"
           >
             {match.mentorName
@@ -131,7 +120,9 @@ function MentorCard({
             </p>
           </div>
         </div>
-        <Badge className={statusStyles[match.status]}>{match.status}</Badge>
+        <Badge className={`label ${statusStyles[match.status]}`}>
+          {match.status}
+        </Badge>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
@@ -163,7 +154,7 @@ function MentorCard({
 
       <div className="mt-3 flex flex-wrap gap-1.5">
         {match.mentorExpertise.map((skill) => (
-          <Badge key={skill} variant="outline" className="text-xs">
+          <Badge key={skill} variant="outline" className="label">
             {skill}
           </Badge>
         ))}
@@ -171,11 +162,14 @@ function MentorCard({
 
       <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
         <span className="text-muted-foreground">
-          Duration: {match.startDate} — {match.endDate}
+          Duration:{" "}
+          <span className="figure">
+            {match.startDate} — {match.endDate}
+          </span>
         </span>
         {match.nextMeeting && (
-          <span className="font-medium text-accent">
-            Next meeting: {match.nextMeeting}
+          <span className="font-medium text-foreground">
+            Next meeting: <span className="figure">{match.nextMeeting}</span>
           </span>
         )}
       </div>
