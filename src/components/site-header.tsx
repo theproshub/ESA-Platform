@@ -1,47 +1,63 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/site-nav";
+import { SiteMobileMenu } from "@/components/site-mobile-menu";
 
 export function SiteHeader({
   /** Suppressed inside the dashboard, where "Open Dashboard" points at the
       page you are already on. */
   showDashboardCta = true,
+  /** The dashboard hides this below md, where the sidebar's own bar already
+      provides a mobile header and a menu button. */
+  showOnMobile = true,
 }: {
   showDashboardCta?: boolean;
+  showOnMobile?: boolean;
 }) {
   return (
-    // Sticks by the height of the eyebrow strip below, so that strip scrolls
-    // out of view and the navigation bar pins to the top. Static on mobile,
-    // where a two-row header would eat too much of the viewport.
-    <header className="md:sticky md:-top-9 md:z-40">
-      {/* Parent institution. Fixed height — the negative sticky offset above
+    // Sticks by the height of the eyebrow strip, so that strip scrolls out of
+    // view and the navigation bar pins to the top at every breakpoint.
+    <header
+      className={cn(
+        "sticky -top-9 z-40",
+        !showOnMobile && "hidden md:block"
+      )}
+    >
+      {/* Institutional context. Fixed h-9 — the negative sticky offset above
           depends on it. */}
       <div className="bg-brand text-brand-foreground">
-        <div className="mx-auto flex h-9 max-w-6xl items-center justify-center px-4 sm:justify-start sm:px-6">
-          <span className="label text-brand-foreground/40">
+        <div className="mx-auto flex h-9 max-w-6xl items-center px-4 sm:px-6">
+          <span className="label truncate text-brand-foreground/40">
             Stella Maris Polytechnic University
+            <span className="hidden sm:inline">
+              {" · "}Arthur Barclay Business College
+            </span>
           </span>
         </div>
       </div>
 
       {/* 90% rather than a heavier frost: when the pinned bar sits over the
-          navy hero, the tint showing through drops the muted nav links to
-          3.99:1 at 80%. At 90% they measure 4.93:1 and still read as glass. */}
-      <div className="border-b border-border bg-card/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl flex-col px-4 sm:px-6 md:h-[72px] md:flex-row md:items-stretch">
-          <Link href="/" className="flex min-w-0 items-center py-3.5 md:py-0">
-            <span className="min-w-0">
-              <span className="block truncate font-serif text-[17px] font-semibold leading-[1.1] tracking-[-0.02em] sm:text-xl md:text-[22px]">
-                Arthur Barclay Business College
-              </span>
-              <span className="mt-0.5 hidden font-serif text-[15px] italic leading-tight text-muted-foreground sm:block">
-                Non Scholae Sed Vitae Discimu
-              </span>
+          navy hero, the tint showing through puts the muted nav links at
+          3.99:1, under WCAG AA. 90% measures 4.93:1 and still reads as glass. */}
+      <div className="relative border-b border-border bg-card/90 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-6xl items-stretch gap-4 px-4 sm:px-6 md:h-[72px]">
+          {/* One brand string across the site: the sidebar and the dashboard's
+              mobile bar use the same monogram and wordmark. */}
+          <Link href="/" className="flex items-center gap-2.5">
+            <span
+              aria-hidden="true"
+              className="label flex h-8 w-9 shrink-0 items-center justify-center rounded-sm bg-brand text-brand-foreground"
+            >
+              ESA
+            </span>
+            <span className="font-serif text-[19px] font-semibold leading-none tracking-[-0.02em] md:text-xl">
+              ESA Platform
             </span>
           </Link>
 
-          <div className="flex items-stretch justify-center gap-6 border-t border-border md:ml-auto md:gap-10 md:border-t-0">
+          <div className="ml-auto flex items-stretch gap-8">
             <SiteNav />
             {showDashboardCta && (
               <div className="hidden items-center md:flex">
@@ -53,6 +69,7 @@ export function SiteHeader({
                 </Link>
               </div>
             )}
+            <SiteMobileMenu showDashboardCta={showDashboardCta} />
           </div>
         </div>
       </div>

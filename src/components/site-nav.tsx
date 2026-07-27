@@ -3,38 +3,26 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { isNavLinkActive, siteNavLinks } from "@/lib/nav";
 
-const navLinks = [
-  // An in-page anchor, so it never takes the active marker.
-  { label: "Features", href: "/#features", anchor: true },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  // The Open Dashboard button covers this from md up, where showing both
-  // would put two links to /dashboard in the same bar. Below md that button
-  // is hidden, so the nav carries the portal instead.
-  { label: "Student Portal", href: "/dashboard", mobileOnly: true },
-];
-
+/** Desktop navigation. Below md the mobile menu takes over. */
 export function SiteNav() {
   const pathname = usePathname();
 
   return (
     <nav
       aria-label="Primary"
-      className="flex items-stretch justify-center gap-6 sm:gap-8"
+      className="hidden items-stretch gap-8 md:flex"
     >
-      {navLinks.map((link) => {
-        const isActive =
-          !link.anchor &&
-          (pathname === link.href || pathname.startsWith(`${link.href}/`));
+      {siteNavLinks.map((link) => {
+        const isActive = isNavLinkActive(link, pathname);
         return (
           <Link
             key={link.href}
             href={link.href}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "group relative flex items-center py-3.5 text-[15px] transition-colors md:py-0",
-              link.mobileOnly && "md:hidden",
+              "group relative flex items-center text-[15px] transition-colors",
               isActive
                 ? "font-medium text-foreground"
                 : "text-muted-foreground hover:text-foreground"
