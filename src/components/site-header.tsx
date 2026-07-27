@@ -1,30 +1,25 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/site-nav";
 import { SiteMobileMenu } from "@/components/site-mobile-menu";
+import { DashboardNavToggle } from "@/components/dashboard-nav";
 
 export function SiteHeader({
   /** Suppressed inside the dashboard, where "Open Dashboard" points at the
       page you are already on. */
   showDashboardCta = true,
-  /** The dashboard hides this below md, where the sidebar's own bar already
-      provides a mobile header and a menu button. */
-  showOnMobile = true,
+  /** Suppressed inside the dashboard, where the sidebar drawer is the single
+      mobile menu and carries the site links itself. */
+  showMobileMenu = true,
 }: {
   showDashboardCta?: boolean;
-  showOnMobile?: boolean;
+  showMobileMenu?: boolean;
 }) {
   return (
     // Sticks by the height of the eyebrow strip, so that strip scrolls out of
     // view and the navigation bar pins to the top at every breakpoint.
-    <header
-      className={cn(
-        "sticky -top-9 z-40",
-        !showOnMobile && "hidden md:block"
-      )}
-    >
+    <header className="sticky -top-9 z-40">
       {/* Institutional context. Fixed h-9 — the negative sticky offset above
           depends on it. */}
       <div className="bg-brand text-brand-foreground">
@@ -42,9 +37,15 @@ export function SiteHeader({
           navy hero, the tint showing through puts the muted nav links at
           3.99:1, under WCAG AA. 90% measures 4.93:1 and still reads as glass. */}
       <div className="relative border-b border-border bg-card/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-6xl items-stretch gap-4 px-4 sm:px-6 md:h-[72px]">
-          {/* One brand string across the site: the sidebar and the dashboard's
-              mobile bar use the same monogram and wordmark. */}
+        <div className="mx-auto flex h-14 max-w-6xl items-stretch gap-3 px-4 sm:px-6 md:h-[72px]">
+          {/* Renders only inside the dashboard, where this bar is also the
+              sidebar's mobile header. */}
+          <div className="flex items-center">
+            <DashboardNavToggle />
+          </div>
+
+          {/* One brand string across the site: the sidebar drawer uses the same
+              monogram and wordmark. */}
           <Link href="/" className="flex items-center gap-2.5">
             <span
               aria-hidden="true"
@@ -69,7 +70,9 @@ export function SiteHeader({
                 </Link>
               </div>
             )}
-            <SiteMobileMenu showDashboardCta={showDashboardCta} />
+            {showMobileMenu && (
+              <SiteMobileMenu showDashboardCta={showDashboardCta} />
+            )}
           </div>
         </div>
       </div>

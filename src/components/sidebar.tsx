@@ -7,7 +7,6 @@ import {
   BookOpen,
   CalendarDays,
   Megaphone,
-  Menu,
   X,
   HandCoins,
   GraduationCap,
@@ -18,7 +17,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Star } from "@/components/star-mark";
-import { useState, useEffect, useRef } from "react";
+import { useDashboardNav } from "@/components/dashboard-nav";
+import { siteNavLinks } from "@/lib/nav";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -31,63 +31,21 @@ const navItems = [
   { href: "/dashboard/outreach", label: "Outreach", icon: Globe },
 ];
 
-function Monogram({ className }: { className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "label flex items-center justify-center rounded-sm bg-sidebar-accent text-sidebar-accent-foreground",
-        className
-      )}
-    >
-      ESA
-    </span>
-  );
-}
+const secondaryLinkClass =
+  "flex items-center gap-3 rounded-sm py-2.5 pl-7 pr-3 text-[15px] text-sidebar-foreground/55 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground";
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handler = () => {
-      const y = window.scrollY;
-      setHeaderVisible(y < lastScrollY.current || y < 10);
-      lastScrollY.current = y;
-    };
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
+  const nav = useDashboardNav();
+  const mobileOpen = nav?.open ?? false;
+  const close = () => nav?.setOpen(false);
 
   return (
     <>
-      <div
-        className={cn(
-          "fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-card px-4 transition-transform duration-300 md:hidden",
-          headerVisible ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        <button
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open navigation menu"
-          className="flex h-9 w-9 items-center justify-center rounded-sm transition-colors hover:bg-secondary"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
-        <Link href="/dashboard" className="flex items-center gap-2.5">
-          <Monogram className="h-7 w-8 !text-[9px] bg-brand text-brand-foreground" />
-          <span className="font-serif text-[15px] font-semibold tracking-[-0.02em]">
-            ESA Platform
-          </span>
-        </Link>
-      </div>
-
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-foreground/40 md:hidden"
-          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 z-[45] bg-foreground/40 md:hidden"
+          onClick={close}
           aria-hidden="true"
         />
       )}
@@ -100,8 +58,13 @@ export function Sidebar() {
         )}
       >
         <div className="flex items-center justify-between px-5 py-5">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <Monogram className="h-9 w-10" />
+          <Link href="/dashboard" onClick={close} className="flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="label flex h-9 w-10 items-center justify-center rounded-sm bg-sidebar-accent text-sidebar-accent-foreground"
+            >
+              ESA
+            </span>
             <div>
               <p className="font-serif text-base font-semibold leading-tight tracking-[-0.02em]">
                 ESA Platform
@@ -112,7 +75,7 @@ export function Sidebar() {
             </div>
           </Link>
           <button
-            onClick={() => setMobileOpen(false)}
+            onClick={close}
             aria-label="Close navigation menu"
             className="rounded-sm p-1 hover:bg-sidebar-accent md:hidden"
           >
@@ -131,7 +94,7 @@ export function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={close}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "relative flex items-center gap-3 rounded-sm py-2.5 pl-7 pr-3 text-[15px] transition-colors",
@@ -154,14 +117,28 @@ export function Sidebar() {
         <div className="mx-5 border-t border-sidebar-border" />
 
         <div className="px-3 py-2">
-          <Link
-            href="/"
-            onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-3 rounded-sm py-2.5 pl-7 pr-3 text-[15px] text-sidebar-foreground/55 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-          >
+          <Link href="/" onClick={close} className={secondaryLinkClass}>
             <Home className="h-5 w-5 shrink-0" strokeWidth={1.75} />
             Home
           </Link>
+          {/* The public site links, carried here on mobile only: this drawer is
+              the whole mobile menu, while on desktop the site header shows
+              them and repeating them would be duplication. Anchors are left
+              out — they point into a page rather than at a destination, and
+              each extra row squeezes the dashboard list above. */}
+          {siteNavLinks
+            .filter((link) => !link.anchor)
+            .map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={close}
+                className={cn(secondaryLinkClass, "md:hidden")}
+              >
+                <span className="h-5 w-5 shrink-0" aria-hidden="true" />
+                {link.label}
+              </Link>
+            ))}
         </div>
 
         <div className="mx-5 border-t border-sidebar-border" />
@@ -169,7 +146,7 @@ export function Sidebar() {
         <div className="p-4">
           <Link
             href="/dashboard/profile"
-            onClick={() => setMobileOpen(false)}
+            onClick={close}
             className="flex items-center gap-3 rounded-sm px-2 py-1.5 transition-colors hover:bg-sidebar-accent/50"
           >
             <div
