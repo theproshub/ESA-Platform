@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Star } from "@/components/star-mark";
 
 const navLinks = [
   // An in-page anchor, so it never takes the active marker.
   { label: "Features", href: "/#features", anchor: true },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-  { label: "Student Portal", href: "/dashboard" },
+  // The Open Dashboard button covers this from md up, where showing both
+  // would put two links to /dashboard in the same bar. Below md that button
+  // is hidden, so the nav carries the portal instead.
+  { label: "Student Portal", href: "/dashboard", mobileOnly: true },
 ];
 
 export function SiteNav() {
@@ -18,10 +20,8 @@ export function SiteNav() {
 
   return (
     <nav
-      aria-label="Utility links"
-      // Tight mobile gap keeps all four links on one line down to ~360px;
-      // below that the row wraps to two centred lines rather than overflowing.
-      className="label flex w-full flex-wrap items-center justify-center gap-x-2.5 gap-y-1 sm:w-auto sm:flex-nowrap sm:justify-end sm:gap-6"
+      aria-label="Primary"
+      className="flex items-stretch justify-center gap-6 sm:gap-8"
     >
       {navLinks.map((link) => {
         const isActive =
@@ -33,14 +33,25 @@ export function SiteNav() {
             href={link.href}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "flex items-center gap-1.5 transition-colors",
+              "group relative flex items-center py-3.5 text-[15px] transition-colors md:py-0",
+              link.mobileOnly && "md:hidden",
               isActive
-                ? "text-brand-foreground"
-                : "text-brand-foreground/50 hover:text-brand-foreground"
+                ? "font-medium text-foreground"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
-            {isActive && <Star className="h-2 w-2 text-accent" />}
             {link.label}
+            {/* Overlaps the bar's 1px bottom border so the marker replaces that
+                segment of the rule rather than hanging below it. */}
+            <span
+              aria-hidden="true"
+              className={cn(
+                "absolute inset-x-0 -bottom-px h-[2px] origin-left transition-transform duration-200 ease-out",
+                isActive
+                  ? "scale-x-100 bg-accent"
+                  : "scale-x-0 bg-foreground/25 group-hover:scale-x-100"
+              )}
+            />
           </Link>
         );
       })}
