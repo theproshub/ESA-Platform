@@ -155,7 +155,7 @@ export default function HomePage() {
               alt="Economics Students Association crest"
               width={144}
               height={168}
-              priority
+              preload
               quality={100}
               className="mx-auto h-16 w-auto object-contain drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] sm:h-24"
             />
