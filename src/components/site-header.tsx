@@ -49,6 +49,12 @@ export function SiteHeader() {
               width={48}
               height={56}
               quality={90}
+              // Above the fold on every page that renders the header, so it
+              // must not lazy-load. Eager rather than `preload`, per Next's
+              // guidance to reserve `preload` for the actual LCP element — this
+              // is a 48px mark, and on the homepage the hero crest is the one
+              // that earns an explicit preload.
+              loading="eager"
               className="h-10 w-9 object-contain sm:h-14 sm:w-12"
             />
             <div>
