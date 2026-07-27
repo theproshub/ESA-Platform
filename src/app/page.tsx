@@ -150,16 +150,8 @@ export default function HomePage() {
           </div>
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
-            <Image
-              src="/esa-logo.png"
-              alt="Economics Students Association crest"
-              width={144}
-              height={168}
-              preload
-              quality={100}
-              className="mx-auto h-16 w-auto object-contain drop-shadow-[0_6px_24px_rgba(0,0,0,0.45)] sm:h-24"
-            />
-            <p className="label mt-6 text-brand-foreground/50 sm:mt-7">
+            {/* The crest lives in the header now; the headline opens the band. */}
+            <p className="label text-brand-foreground/50">
               Stella Maris Polytechnic University
             </p>
             <h1 className="mt-5 text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-brand-foreground sm:text-[52px] md:text-[58px]">
