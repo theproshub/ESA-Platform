@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/site-nav";
@@ -44,13 +45,28 @@ export function SiteHeader({
             <DashboardNavToggle />
           </div>
 
-          {/* Same lockup as the sidebar: wordmark over the motto. */}
-          <Link href="/" className="flex min-w-0 flex-col justify-center">
-            <span className="font-serif text-[19px] font-semibold leading-tight tracking-[-0.02em] md:text-xl">
-              ESA Platform
-            </span>
-            <span className="mt-0.5 truncate font-serif text-[13px] italic leading-tight text-muted-foreground">
-              Non Scholae Sed Vitae Discimu
+          <Link href="/" className="flex min-w-0 items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="Economics Students Association crest"
+              // Declared at display size, not intrinsic: Next builds the srcset
+              // from this, and 550x640 made it fetch a 1200px variant for a
+              // 38px mark. Same 550:640 aspect ratio.
+              width={55}
+              height={64}
+              quality={90}
+              // Above the fold on every page, so it must not lazy-load. Eager
+              // rather than `preload`: this is a ~40px mark, not the LCP.
+              loading="eager"
+              className="h-9 w-auto shrink-0 object-contain md:h-11"
+            />
+            <span className="flex min-w-0 flex-col">
+              <span className="font-serif text-[19px] font-semibold leading-tight tracking-[-0.02em] md:text-xl">
+                ESA Platform
+              </span>
+              <span className="mt-0.5 truncate font-serif text-[13px] italic leading-tight text-muted-foreground">
+                Non Scholae Sed Vitae Discimu
+              </span>
             </span>
           </Link>
 
