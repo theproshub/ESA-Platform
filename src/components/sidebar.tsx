@@ -63,8 +63,11 @@ export function Sidebar() {
             <p className="font-serif text-base font-semibold leading-tight tracking-[-0.02em]">
               ESA Platform
             </p>
-            <p className="label mt-0.5 leading-tight text-sidebar-foreground/45">
-              Stella Maris Poly
+            {/* The motto reads as a phrase, not a label: mono uppercase needs
+                198px at its tightest and only 188px is available, so it wraps.
+                Serif italic is the treatment the site already uses for it. */}
+            <p className="mt-0.5 font-serif text-[13px] italic leading-tight text-sidebar-foreground/45">
+              Non Scholae Sed Vitae Discimu
             </p>
           </Link>
           <button
