@@ -7,7 +7,7 @@ export type SiteNavLink = {
 
 /** Public site navigation, shared by the desktop bar and the mobile menu. */
 export const siteNavLinks: readonly SiteNavLink[] = [
-  { label: "Features", href: "/#features", anchor: true },
+  { label: "Support", href: "/#support", anchor: true },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

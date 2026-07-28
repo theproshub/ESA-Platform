@@ -18,7 +18,7 @@ const footerSections = [
       { label: "Dashboard", href: "/dashboard" },
       { label: "Profile", href: "/dashboard/profile" },
       { label: "About", href: "/about" },
-      { label: "Features", href: "/#features" },
+      { label: "Support", href: "/#support" },
     ],
   },
 ];
