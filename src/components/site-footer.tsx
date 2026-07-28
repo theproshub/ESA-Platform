@@ -44,11 +44,11 @@ export function SiteFooter({ className }: { className?: string }) {
                 src="/logo.png"
                 alt=""
                 // Declared at display size, matching the header: Next builds
-                // the srcset from these. Keeps the 550:640 aspect ratio.
+                // the srcset from these. Keeps the 914:1064 aspect ratio.
                 width={55}
                 height={64}
                 quality={90}
-                className="h-11 w-auto shrink-0 object-contain"
+                className="h-16 w-auto shrink-0 object-contain"
               />
               <div>
                 <p className="font-serif text-[17px] font-semibold leading-[1.1] tracking-[-0.02em]">

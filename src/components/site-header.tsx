@@ -38,7 +38,7 @@ export function SiteHeader({
           navy hero, the tint showing through puts the muted nav links at
           3.99:1, under WCAG AA. 90% measures 4.93:1 and still reads as glass. */}
       <div className="relative border-b border-border bg-card/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-6xl items-stretch gap-3 px-4 sm:px-6 md:h-[72px]">
+        <div className="mx-auto flex h-16 max-w-6xl items-stretch gap-3 px-4 sm:px-6 md:h-20">
           {/* Renders only inside the dashboard, where this bar is also the
               sidebar's mobile header. */}
           <div className="flex items-center">
@@ -50,15 +50,15 @@ export function SiteHeader({
               src="/logo.png"
               alt="Economics Students Association crest"
               // Declared at display size, not intrinsic: Next builds the srcset
-              // from this, and 550x640 made it fetch a 1200px variant for a
-              // 38px mark. Same 550:640 aspect ratio.
-              width={55}
-              height={64}
+              // from this, and the intrinsic size made it fetch a 1200px
+              // variant for a small mark. Keeps the 914:1064 aspect ratio.
+              width={48}
+              height={56}
               quality={90}
               // Above the fold on every page, so it must not lazy-load. Eager
-              // rather than `preload`: this is a ~40px mark, not the LCP.
+              // rather than `preload`: this is a ~56px mark, not the LCP.
               loading="eager"
-              className="h-9 w-auto shrink-0 object-contain md:h-11"
+              className="h-11 w-auto shrink-0 object-contain md:h-14"
             />
             <span className="flex min-w-0 flex-col">
               <span className="font-serif text-[19px] font-semibold leading-tight tracking-[-0.02em] md:text-xl">
