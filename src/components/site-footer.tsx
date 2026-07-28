@@ -39,18 +39,16 @@ export function SiteFooter({ className }: { className?: string }) {
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <Link
-              href="/"
-              className="flex items-center gap-3"
-              aria-label="ESA Platform home"
-            >
+            <Link href="/" className="flex items-center gap-3">
               <Image
-                src="/esa-logo.png"
+                src="/logo.png"
                 alt=""
-                width={40}
-                height={47}
+                // Declared at display size, matching the header: Next builds
+                // the srcset from these. Keeps the 550:640 aspect ratio.
+                width={55}
+                height={64}
                 quality={90}
-                className="h-11 w-9 object-contain"
+                className="h-11 w-auto shrink-0 object-contain"
               />
               <div>
                 <p className="font-serif text-[17px] font-semibold leading-[1.1] tracking-[-0.02em]">
