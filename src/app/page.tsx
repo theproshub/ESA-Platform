@@ -150,11 +150,9 @@ export default function HomePage() {
           </div>
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
-            {/* The crest lives in the header now; the headline opens the band. */}
-            <p className="label text-brand-foreground/50">
-              Stella Maris Polytechnic University
-            </p>
-            <h1 className="mt-5 text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-brand-foreground sm:text-[52px] md:text-[58px]">
+            {/* The crest and the university line both live in the header now,
+                so the headline opens the band on its own. */}
+            <h1 className="text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-brand-foreground sm:text-[52px] md:text-[58px]">
               Economics Students Association
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-brand-foreground/70 sm:mt-7 sm:text-lg">
