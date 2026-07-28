@@ -97,13 +97,6 @@ const services = [
   },
 ];
 
-const stats = [
-  { value: "500+", label: "Active members" },
-  { value: "50", label: "Courses listed" },
-  { value: "12", label: "Committees" },
-  { value: "98%", label: "Satisfaction rate" },
-];
-
 // Placeholder alumni testimonials. Names, quotes, and sectors are invented and
 // must be replaced with real, signed-off quotes before launch. Employers are
 // deliberately unnamed — do not attach a real institution to an invented quote.
@@ -182,25 +175,6 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-        </section>
-
-        {/* Read as a row of a statistical table: figures set in mono, ruled off. */}
-        <section
-          aria-label="Association at a glance"
-          className="border-y bg-card px-4 py-10 sm:px-6 sm:py-12"
-        >
-          <dl className="mx-auto grid max-w-4xl grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-y-0 md:divide-x md:divide-border">
-            {stats.map((stat) => (
-              <div key={stat.label} className="px-2 text-center">
-                <dd className="figure text-[32px] font-semibold leading-none sm:text-[40px]">
-                  {stat.value}
-                </dd>
-                <dt className="label mt-2.5 text-muted-foreground">
-                  {stat.label}
-                </dt>
-              </div>
-            ))}
-          </dl>
         </section>
 
         <section id="features" className="px-4 py-16 sm:px-6 md:py-24">
