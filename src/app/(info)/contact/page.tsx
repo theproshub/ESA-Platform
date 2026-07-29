@@ -3,14 +3,31 @@ import Link from "next/link";
 import { Mail, MapPin, Building2, Clock, ArrowRight } from "lucide-react";
 import { InfoHero } from "@/components/info-hero";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata, siteConfig } from "@/lib/site";
+import { breadcrumbSchema, pageSchema } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Contact — Economics Students Association",
-  description:
-    "Get in touch with the Economics Students Association at Stella Maris Polytechnic University.",
-};
+const title = "Contact";
+const description =
+  "Get in touch with the Economics Students Association at Stella Maris Polytechnic University — email, office hours, and location.";
 
-const EMAIL = "Econstudentsassn25@gmail.com";
+export const metadata: Metadata = pageMetadata({
+  title,
+  description,
+  path: "/contact",
+});
+
+const structuredData = [
+  pageSchema({
+    type: "ContactPage",
+    path: "/contact",
+    name: "Contact the Association",
+    description,
+  }),
+  breadcrumbSchema([{ name: "Contact", path: "/contact" }]),
+];
+
+const EMAIL = siteConfig.email;
 
 const details = [
   {
@@ -22,12 +39,12 @@ const details = [
   {
     icon: Building2,
     label: "University",
-    value: "Stella Maris Polytechnic University",
+    value: siteConfig.university,
   },
   {
     icon: MapPin,
     label: "Location",
-    value: "Department of Economics, Main Campus",
+    value: siteConfig.location,
   },
   {
     icon: Clock,
@@ -39,6 +56,7 @@ const details = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={structuredData} />
       <InfoHero
         eyebrow="Contact"
         title="Get in touch"

@@ -1,8 +1,19 @@
+import type { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar";
 import { DashboardNavProvider } from "@/components/dashboard-nav";
 import { PageTransition } from "@/components/page-transition";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { titleTemplate } from "@/lib/site";
+
+// The dashboard is the members' area: it holds student records and needs a
+// session to mean anything, so it stays out of search results entirely. The
+// template is restated because a segment that redefines `title` also drops the
+// parent's template for its children.
+export const metadata: Metadata = {
+  title: { default: "Dashboard", template: titleTemplate },
+  robots: { index: false, follow: false, nocache: true },
+};
 
 export default function DashboardLayout({
   children,

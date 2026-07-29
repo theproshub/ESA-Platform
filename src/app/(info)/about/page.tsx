@@ -11,12 +11,29 @@ import {
 } from "lucide-react";
 import { InfoHero } from "@/components/info-hero";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata } from "@/lib/site";
+import { breadcrumbSchema, pageSchema } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "About — Economics Students Association",
-  description:
-    "Learn about the Economics Students Association at Stella Maris Polytechnic University — our mission, community, and what the platform offers.",
-};
+const title = "About";
+const description =
+  "Learn about the Economics Students Association at Stella Maris Polytechnic University — our mission, community, and what the platform offers.";
+
+export const metadata: Metadata = pageMetadata({
+  title,
+  description,
+  path: "/about",
+});
+
+const structuredData = [
+  pageSchema({
+    type: "AboutPage",
+    path: "/about",
+    name: "About the Association",
+    description,
+  }),
+  breadcrumbSchema([{ name: "About", path: "/about" }]),
+];
 
 const offerings = [
   {
@@ -58,6 +75,7 @@ const offerings = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={structuredData} />
       <InfoHero
         eyebrow="About"
         title="About the Association"
@@ -83,7 +101,7 @@ export default function AboutPage() {
             Our mission
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            Guided by our motto — <em>Non Scholae Sed Vitae Discimu</em>, &ldquo;we
+            Guided by our motto — <em>Non Scholae Sed Vitae Discimus</em>, &ldquo;we
             learn not for school but for life&rdquo; — the association exists to
             enrich the academic experience of economics students, represent their
             interests, and prepare them for life beyond the classroom through

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   Users,
   Building,
@@ -9,6 +10,10 @@ import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { mentorshipMatches } from "@/lib/data";
 import { statusTone } from "@/lib/status";
+
+export const metadata: Metadata = {
+  title: "Mentorship Programs",
+};
 
 const statusStyles = {
   active: statusTone.positive,

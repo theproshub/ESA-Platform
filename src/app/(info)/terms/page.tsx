@@ -1,12 +1,32 @@
 import type { Metadata } from "next";
 import { InfoHero } from "@/components/info-hero";
 import { LegalSections, type LegalSection } from "@/components/legal-sections";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata } from "@/lib/site";
+import { breadcrumbSchema, pageSchema } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Terms of Use — Economics Students Association",
-  description:
-    "The terms that govern your use of the Economics Students Association platform.",
-};
+const title = "Terms of Use";
+const description =
+  "The terms that govern your use of the Economics Students Association platform.";
+
+export const metadata: Metadata = pageMetadata({
+  title,
+  description,
+  path: "/terms",
+});
+
+// Keep in step with the `updated` line rendered in the hero below.
+const UPDATED = "25 July 2026";
+
+const structuredData = [
+  pageSchema({
+    path: "/terms",
+    name: title,
+    description,
+    dateModified: "2026-07-25",
+  }),
+  breadcrumbSchema([{ name: title, path: "/terms" }]),
+];
 
 const sections: LegalSection[] = [
   {
@@ -68,7 +88,8 @@ const sections: LegalSection[] = [
 export default function TermsPage() {
   return (
     <>
-      <InfoHero eyebrow="Legal" title="Terms of Use" updated="25 July 2026" />
+      <JsonLd data={structuredData} />
+      <InfoHero eyebrow="Legal" title="Terms of Use" updated={UPDATED} />
       <LegalSections sections={sections} />
     </>
   );

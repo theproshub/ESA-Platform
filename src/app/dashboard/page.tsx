@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   BookOpen,
@@ -15,6 +16,12 @@ import {
   announcements,
   academicSchedules,
 } from "@/lib/data";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description:
+    "Your courses, schedule, announcements, and membership at a glance.",
+};
 
 const quickLinks = [
   {

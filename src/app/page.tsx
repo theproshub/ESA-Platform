@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,6 +17,12 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionMark } from "@/components/star-mark";
 import { IsLmPlot } from "@/components/is-lm-plot";
+
+// The title and description are the root layout's defaults; the home page only
+// pins its own canonical.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const features = [
   {
@@ -143,9 +150,12 @@ export default function HomePage() {
           </div>
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
-            {/* The crest and the university line both live in the header now,
-                so the headline opens the band on its own. */}
-            <h1 className="text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-brand-foreground sm:text-[52px] md:text-[58px]">
+            {/* The crest and the university line live in the header; the hero
+                names the college the association belongs to. */}
+            <p className="label text-brand-foreground/50">
+              Arthur Barclay Business College
+            </p>
+            <h1 className="mt-5 text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-brand-foreground sm:text-[52px] md:text-[58px]">
               Economics Students Association
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-brand-foreground/70 sm:mt-7 sm:text-lg">
