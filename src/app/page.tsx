@@ -28,6 +28,7 @@ const features = [
   {
     icon: BookOpen,
     image: "/feature-courses.webp",
+    href: "/dashboard/courses",
     title: "Course Guide",
     description:
       "Browse courses organised by level and semester with full lecturer and credit hour details.",
@@ -35,6 +36,7 @@ const features = [
   {
     icon: CalendarDays,
     image: "/feature-schedule.webp",
+    href: "/dashboard/schedule",
     title: "Academic Schedule",
     description:
       "View your weekly timetable, examination periods, and the full academic calendar.",
@@ -42,6 +44,7 @@ const features = [
   {
     icon: Megaphone,
     image: "/feature-announcements.webp",
+    href: "/dashboard/announcements",
     title: "Announcements",
     description:
       "Read official notices from the association — meetings, deadlines, events, and more.",
@@ -49,6 +52,7 @@ const features = [
   {
     icon: CreditCard,
     image: "/feature-membership.webp",
+    href: "/dashboard/membership",
     title: "Digital Membership",
     description:
       "Access your verified ESA membership card on any device, at any time.",
@@ -56,6 +60,7 @@ const features = [
   {
     icon: Users,
     image: "/feature-community.webp",
+    href: "/dashboard/outreach",
     title: "Community",
     description:
       "Stay connected with fellow economics students and engage with association committees.",
@@ -200,37 +205,55 @@ export default function HomePage() {
               </p>
             </div>
             <div className="mx-auto mt-12 grid max-w-2xl gap-5 sm:mt-16 sm:gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature) => (
-                <article
-                  key={feature.title}
-                  className="group overflow-hidden rounded-xl bg-card ring-1 ring-border transition-colors hover:ring-foreground/25"
-                >
-                  <div className="relative aspect-[3/2] overflow-hidden bg-secondary">
-                    <Image
-                      src={feature.image}
-                      alt=""
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2.5">
-                      <feature.icon
-                        className="h-[18px] w-[18px] shrink-0 text-brand"
-                        strokeWidth={1.75}
-                        aria-hidden="true"
+              {features.map((feature) => {
+                const body = (
+                  <>
+                    <div className="relative aspect-[3/2] overflow-hidden bg-secondary">
+                      <Image
+                        src={feature.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <h3 className="text-lg font-semibold tracking-[-0.015em] sm:text-xl">
-                        {feature.title}
-                      </h3>
                     </div>
-                    <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-                </article>
-              ))}
+                    <div className="p-5">
+                      <div className="flex items-center gap-2.5">
+                        <feature.icon
+                          className="h-[18px] w-[18px] shrink-0 text-brand"
+                          strokeWidth={1.75}
+                          aria-hidden="true"
+                        />
+                        <h3 className="text-lg font-semibold tracking-[-0.015em] sm:text-xl">
+                          {feature.title}
+                        </h3>
+                      </div>
+                      <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </>
+                );
+
+                // Academic Resources has no page yet, so it stays a plain card
+                // rather than a link that leads nowhere.
+                return feature.href ? (
+                  <Link
+                    key={feature.title}
+                    href={feature.href}
+                    className="group overflow-hidden rounded-xl bg-card ring-1 ring-border transition-colors hover:ring-foreground/25"
+                  >
+                    {body}
+                  </Link>
+                ) : (
+                  <article
+                    key={feature.title}
+                    className="group overflow-hidden rounded-xl bg-card ring-1 ring-border"
+                  >
+                    {body}
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
