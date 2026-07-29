@@ -10,6 +10,7 @@ import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { mentorshipMatches } from "@/lib/data";
 import { statusTone } from "@/lib/status";
+import { formatDate, formatDateRange } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Mentorship Programs",
@@ -169,12 +170,12 @@ function MentorCard({
         <span className="text-muted-foreground">
           Duration:{" "}
           <span className="figure">
-            {match.startDate} — {match.endDate}
+            {formatDateRange(match.startDate, match.endDate)}
           </span>
         </span>
         {match.nextMeeting && (
           <span className="font-medium text-foreground">
-            Next meeting: <span className="figure">{match.nextMeeting}</span>
+            Next meeting: <span className="figure">{formatDate(match.nextMeeting)}</span>
           </span>
         )}
       </div>

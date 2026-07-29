@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { financialAidRecords, currentStudent } from "@/lib/data";
 import { statusTone } from "@/lib/status";
+import { formatDate } from "@/lib/utils";
 
 const statusStyles = {
   approved: { className: statusTone.positive, icon: CheckCircle2 },
@@ -126,13 +127,15 @@ export default function FinancialAidPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Applied</span>
-                      <span className="figure font-medium">{record.appliedDate}</span>
+                      <span className="figure font-medium">
+                        {formatDate(record.appliedDate)}
+                      </span>
                     </div>
                     {record.decisionDate && (
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Decision</span>
                         <span className="figure font-medium">
-                          {record.decisionDate}
+                          {formatDate(record.decisionDate)}
                         </span>
                       </div>
                     )}

@@ -14,6 +14,7 @@ import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { advisingSessions } from "@/lib/data";
 import { statusTone } from "@/lib/status";
+import { formatDate } from "@/lib/utils";
 
 const typeLabels: Record<string, string> = {
   "course-planning": "Course Planning",
@@ -142,7 +143,7 @@ function SessionCard({
             strokeWidth={1.75}
             aria-hidden="true"
           />
-          <span className="figure">{session.date}</span>
+          <span className="figure">{formatDate(session.date)}</span>
         </span>
         <span className="flex items-center gap-1.5">
           <Clock

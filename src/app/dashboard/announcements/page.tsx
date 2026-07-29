@@ -8,18 +8,7 @@ import { PageHeader } from "@/components/page-header";
 import { PriorityBadge } from "@/components/priority-badge";
 import { EmptyState } from "@/components/empty-state";
 import { announcements } from "@/lib/data";
-
-function timeAgo(dateString: string): string {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-  if (diffHours < 1) return "Just now";
-  if (diffHours < 24) return `${diffHours}h ago`;
-  const diffDays = Math.floor(diffHours / 24);
-  if (diffDays === 1) return "Yesterday";
-  return `${diffDays} days ago`;
-}
+import { formatDate } from "@/lib/utils";
 
 export default function AnnouncementsPage() {
   const [search, setSearch] = useState("");
@@ -111,7 +100,7 @@ export default function AnnouncementsPage() {
                     </p>
                   </div>
                   <time className="figure shrink-0 text-[12px] text-muted-foreground sm:text-[13px]">
-                    {timeAgo(ann.createdAt)}
+                    {formatDate(ann.createdAt)}
                   </time>
                 </div>
                 <footer className="mt-3 flex items-center gap-2 border-t pt-2.5 text-[13px] text-muted-foreground sm:mt-4 sm:pt-3 sm:text-sm">

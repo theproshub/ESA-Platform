@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { outreachEvents } from "@/lib/data";
 import { statusTone } from "@/lib/status";
+import { formatDate } from "@/lib/utils";
 
 const typeLabels: Record<string, string> = {
   workshop: "Workshop",
@@ -129,7 +130,7 @@ export default function OutreachPage() {
                       strokeWidth={1.75}
                       aria-hidden="true"
                     />
-                    <span className="figure">{event.date}</span>
+                    <span className="figure">{formatDate(event.date)}</span>
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Clock

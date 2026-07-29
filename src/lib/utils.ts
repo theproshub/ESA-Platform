@@ -6,6 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+/** A single date, written out: "28 June 2026". */
+export function formatDate(date: string) {
+  return format(parseISO(date), "d MMMM yyyy")
+}
+
 /**
  * Renders a calendar event's dates. Single-day events print one date; a range
  * that stays inside one month is collapsed to "12 – 17 October 2026".
