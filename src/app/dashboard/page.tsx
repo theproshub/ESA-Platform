@@ -16,6 +16,7 @@ import {
   announcements,
   academicSchedules,
 } from "@/lib/data";
+import { formatDateRange } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -57,7 +58,13 @@ export default function DashboardPage() {
   const yearCourses = courses.filter((c) => c.level === currentStudent.level);
   const yearCredits = yearCourses.reduce((s, c) => s + c.creditHours, 0);
   const recentAnnouncements = announcements.slice(0, 3);
-  const nextEvent = academicSchedules[1];
+  // The first calendar event that hasn't finished yet. ISO dates compare
+  // lexicographically, so no parsing is needed. The page is prerendered, so
+  // "today" is the build date — fine while the calendar is static data.
+  const today = new Date().toISOString().slice(0, 10);
+  const nextEvent =
+    academicSchedules.find((e) => (e.endDate ?? e.startDate) >= today) ??
+    academicSchedules.at(-1);
 
   return (
     <div className="space-y-6 sm:space-y-10">
@@ -210,7 +217,7 @@ export default function DashboardPage() {
                 <div className="min-w-0">
                   <p className="text-sm font-semibold sm:text-base">{nextEvent.title}</p>
                   <p className="figure mt-1 text-[13px] text-muted-foreground">
-                    {nextEvent.startDate} — {nextEvent.endDate}
+                    {formatDateRange(nextEvent.startDate, nextEvent.endDate)}
                   </p>
                 </div>
                 <Badge variant="outline" className="label shrink-0">

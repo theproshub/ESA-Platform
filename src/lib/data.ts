@@ -539,60 +539,214 @@ export const courses: Course[] = [
   },
 ];
 
+/**
+ * Semester I, 2026/2027, as published in the university's academic calendar.
+ * Two dates in the source sheet are inconsistent and are flagged inline.
+ */
 export const academicSchedules: AcademicSchedule[] = [
   {
     id: "1",
-    title: "First Semester",
-    type: "semester",
-    startDate: "2026-09-08",
-    endDate: "2026-12-19",
+    title: "Entrance Exam",
+    type: "exam",
+    startDate: "2026-03-23",
+    endDate: "2026-07-31",
     description:
-      "Regular lectures, assignments, and coursework for Semester 1 at Stella Maris Polytechnic University.",
+      "Entrance examinations for prospective students.",
   },
   {
     id: "2",
-    title: "Midterm Examinations",
-    type: "midterm",
-    startDate: "2026-10-20",
-    endDate: "2026-10-31",
+    title: "Re-admission of Old Students",
+    type: "registration",
+    startDate: "2026-07-01",
+    endDate: "2026-07-31",
     description:
-      "Midterm assessments for all courses. Check your course schedule for specific dates and venues within the ABBC Building.",
+      "Returning students confirm their place for the new academic year.",
   },
   {
     id: "3",
-    title: "Final Examinations",
-    type: "finals",
-    startDate: "2026-12-01",
-    endDate: "2026-12-19",
+    title: "Independence Day",
+    type: "holiday",
+    startDate: "2026-07-26",
+    endDate: "2026-07-27",
     description:
-      "End-of-semester final examinations. Ensure all coursework is submitted before exams begin.",
+      "National holiday. Falls on a Sunday and is celebrated on Monday, 27 July.",
   },
   {
     id: "4",
-    title: "Christmas Vacation",
-    type: "vacation",
-    startDate: "2026-12-20",
-    endDate: "2027-01-12",
+    title: "Orientation",
+    type: "ceremony",
+    startDate: "2026-08-03",
     description:
-      "University break. Campus facilities may have limited access.",
+      "Orientation for incoming students, on the opening day of registration.",
   },
   {
     id: "5",
-    title: "Second Semester",
-    type: "semester",
-    startDate: "2027-01-13",
-    endDate: "2027-05-16",
+    title: "Registration",
+    type: "registration",
+    startDate: "2026-08-03",
+    endDate: "2026-08-29",
     description:
-      "Regular lectures, assignments, and coursework for Semester 2.",
+      "Course registration for the first semester.",
   },
   {
     id: "6",
-    title: "Vacation School",
-    type: "vacation",
-    startDate: "2027-06-02",
-    endDate: "2027-07-25",
+    title: "Stella Maris Day",
+    type: "ceremony",
+    startDate: "2026-08-15",
     description:
-      "Optional vacation school for resit courses and additional credits.",
+      "University celebration of its patronal feast.",
+  },
+  {
+    id: "7",
+    title: "Faculty & Staff Workshop",
+    type: "ceremony",
+    startDate: "2026-08-15",
+    description:
+      "Workshop for faculty and staff ahead of the semester.",
+  },
+  {
+    id: "8",
+    title: "National Flag Day",
+    type: "holiday",
+    startDate: "2026-08-24",
+    description:
+      "National holiday.",
+  },
+  {
+    id: "9",
+    title: "Commencement Convocation 2025/2026",
+    type: "ceremony",
+    startDate: "2026-08-28",
+    description:
+      "Graduation ceremony for the outgoing 2025/2026 class.",
+  },
+  {
+    id: "10",
+    title: "Classes Officially Begin",
+    type: "semester",
+    startDate: "2026-09-01",
+    description:
+      "First day of lectures for the 2026/2027 first semester.",
+  },
+  {
+    id: "11",
+    title: "Late Registration",
+    type: "registration",
+    startDate: "2026-09-07",
+    endDate: "2026-09-11",
+    description:
+      "Registration remains open, with late fees applying.",
+  },
+  {
+    id: "12",
+    title: "Matriculation / Inauguration",
+    type: "ceremony",
+    startDate: "2026-09-11",
+    description:
+      "New students are formally admitted into the university.",
+  },
+  {
+    id: "13",
+    title: "Add/Drop Process",
+    type: "registration",
+    startDate: "2026-09-14",
+    endDate: "2026-09-18",
+    description:
+      "Last window to add or drop courses without penalty.",
+  },
+  {
+    id: "14",
+    title: "1st Semester Mass",
+    type: "ceremony",
+    startDate: "2026-09-18",
+    description:
+      "Mass marking the opening of the semester.",
+  },
+  {
+    id: "15",
+    title: "Mid-term Exams",
+    type: "midterm",
+    startDate: "2026-10-12",
+    endDate: "2026-10-17",
+    description:
+      "Mid-semester assessments across all courses.",
+  },
+  {
+    id: "16",
+    title: "All Saints Day",
+    type: "holiday",
+    startDate: "2026-11-01",
+    description:
+      "Holy Day of Obligation.",
+  },
+  {
+    id: "17",
+    title: "Thanksgiving Day",
+    type: "holiday",
+    startDate: "2026-11-05",
+    description:
+      "National holiday.",
+  },
+  {
+    id: "18",
+    title: "Sports Day",
+    type: "ceremony",
+    startDate: "2026-11-13",
+    endDate: "2026-11-14",
+    description:
+      "Inter-departmental sporting events.",
+  },
+  {
+    id: "19",
+    title: "William V.S. Tubman Birthday",
+    type: "holiday",
+    // The sheet reads "Sunday, November 29, 2025". 29 November 2025 was a
+    // Saturday; 29 November 2026 is the Sunday, and the celebrated date it
+    // gives is in 2026, so the year is a typo.
+    startDate: "2026-11-29",
+    endDate: "2026-11-30",
+    description:
+      "National holiday. Falls on a Sunday and is celebrated on Monday, 30 November.",
+  },
+  {
+    id: "20",
+    title: "Final Exams",
+    type: "finals",
+    startDate: "2026-12-09",
+    endDate: "2026-12-19",
+    description:
+      "End-of-semester examinations. All coursework must be submitted beforehand.",
+  },
+  {
+    id: "21",
+    title: "Submission of Grades",
+    type: "deadline",
+    // Two discrepancies in the sheet, left as written apart from the year:
+    // it calls 10 December 2026 a Wednesday (it is a Thursday; the Wednesday
+    // is the 9th), and ends "Monday, January 5, 2026" — 2026 is impossible
+    // here, and in 2027 the 5th is a Tuesday while the Monday is the 4th.
+    startDate: "2026-12-10",
+    endDate: "2027-01-05",
+    description:
+      "Deadline for faculty to submit semester grades.",
+  },
+  {
+    id: "22",
+    title: "Student Course Evaluation / General Feedback Survey",
+    type: "deadline",
+    startDate: "2026-12-15",
+    endDate: "2027-01-15",
+    description:
+      "Students rate their courses and give feedback on the semester.",
+  },
+  {
+    id: "23",
+    title: "Christmas Break",
+    type: "vacation",
+    startDate: "2026-12-22",
+    endDate: "2027-01-04",
+    description:
+      "University break. Campus facilities may have limited access.",
   },
 ];
 

@@ -7,7 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { courses, currentStudent, academicSchedules } from "@/lib/data";
+import type { AcademicSchedule } from "@/lib/types";
 import { statusTone, statusRule } from "@/lib/status";
+import { formatDateRange } from "@/lib/utils";
 
 const yearLabels: Record<number, string> = {
   100: "First Year",
@@ -18,17 +20,30 @@ const yearLabels: Record<number, string> = {
 
 const semesters = [1, 2] as const;
 
-const typeStyles = {
+// Assessments read loudest, then anything the student has to act on; breaks
+// are positive, the semester's own milestones informational, and ceremonies
+// sit quietly behind the rest.
+const typeStyles: Record<AcademicSchedule["type"], string> = {
   semester: statusRule.info,
+  registration: statusRule.attention,
+  exam: statusRule.attention,
   midterm: statusRule.attention,
   finals: statusRule.critical,
+  deadline: statusRule.attention,
+  ceremony: statusRule.quiet,
+  holiday: statusRule.positive,
   vacation: statusRule.positive,
 };
 
-const typeBadgeStyles = {
+const typeBadgeStyles: Record<AcademicSchedule["type"], string> = {
   semester: statusTone.info,
+  registration: statusTone.attention,
+  exam: statusTone.attention,
   midterm: statusTone.attention,
   finals: statusTone.critical,
+  deadline: statusTone.attention,
+  ceremony: statusTone.quiet,
+  holiday: statusTone.positive,
   vacation: statusTone.positive,
 };
 
@@ -159,7 +174,7 @@ export default function SchedulePage() {
                 <div className="min-w-0">
                   <h3 className="text-sm font-semibold sm:text-base">{event.title}</h3>
                   <p className="figure mt-1 text-[13px] text-muted-foreground">
-                    {event.startDate} — {event.endDate}
+                    {formatDateRange(event.startDate, event.endDate)}
                   </p>
                 </div>
                 <Badge className={`label shrink-0 ${typeBadgeStyles[event.type]}`}>

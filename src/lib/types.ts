@@ -30,9 +30,19 @@ export interface Course {
 export interface AcademicSchedule {
   id: string;
   title: string;
-  type: "semester" | "midterm" | "finals" | "vacation";
+  type:
+    | "semester"
+    | "registration"
+    | "exam"
+    | "midterm"
+    | "finals"
+    | "deadline"
+    | "ceremony"
+    | "holiday"
+    | "vacation";
   startDate: string;
-  endDate: string;
+  /** Omitted for single-day events. */
+  endDate?: string;
   description: string;
 }
 
