@@ -721,10 +721,10 @@ export const academicSchedules: AcademicSchedule[] = [
     id: "21",
     title: "Submission of Grades",
     type: "deadline",
-    // Two discrepancies in the sheet, left as written apart from the year:
-    // it calls 10 December 2026 a Wednesday (it is a Thursday; the Wednesday
-    // is the 9th), and ends "Monday, January 5, 2026" — 2026 is impossible
-    // here, and in 2027 the 5th is a Tuesday while the Monday is the 4th.
+    // The dates below are confirmed correct; the weekdays printed beside them
+    // in the source sheet are not. It calls 10 December 2026 a Wednesday (it
+    // is a Thursday) and 5 January 2027 a Monday (it is a Tuesday, and the
+    // sheet also gives the year as 2026, which is impossible here).
     startDate: "2026-12-10",
     endDate: "2027-01-05",
     description:
