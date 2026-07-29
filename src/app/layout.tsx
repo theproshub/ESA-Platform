@@ -97,6 +97,10 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  // Tints the mobile browser chrome to match the navy band the header and
+  // hero sit in. Single value: the dark palette is class-based and has no
+  // toggle wired up, so the site always renders light.
+  themeColor: "#072a5e",
 };
 
 export default function RootLayout({
