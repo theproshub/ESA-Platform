@@ -169,6 +169,17 @@
 
 html {
   scroll-behavior: smooth;
+  /* Fragment targets (#support, #features, #about) land at the top of the
+     viewport, which the pinned nav bar covers. Offset by its height — h-16,
+     and h-20 from md. The eyebrow strip above it scrolls away, so it is not
+     counted. */
+  scroll-padding-top: 4rem;
+}
+
+@media (min-width: 48rem) {
+  html {
+    scroll-padding-top: 5rem;
+  }
 }
 
 @keyframes float {

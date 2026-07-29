@@ -25,11 +25,10 @@ export function SiteHeader({
           depends on it. */}
       <div className="bg-brand text-brand-foreground">
         <div className="mx-auto flex h-9 max-w-6xl items-center px-4 sm:px-6">
+          {/* The college is named by the hero eyebrow, so the strip carries
+              the university alone. */}
           <span className="label truncate text-brand-foreground/40">
             Stella Maris Polytechnic University
-            <span className="hidden sm:inline">
-              {" · "}Arthur Barclay Business College
-            </span>
           </span>
         </div>
       </div>
@@ -65,7 +64,7 @@ export function SiteHeader({
                 ESA Platform
               </span>
               <span className="mt-0.5 truncate font-serif text-[13px] italic leading-tight text-muted-foreground">
-                Non Scholae Sed Vitae Discimu
+                Non Scholae Sed Vitae Discimus
               </span>
             </span>
           </Link>

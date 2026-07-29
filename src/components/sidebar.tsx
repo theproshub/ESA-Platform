@@ -67,7 +67,7 @@ export function Sidebar() {
                 198px at its tightest and only 188px is available, so it wraps.
                 Serif italic is the treatment the site already uses for it. */}
             <p className="mt-0.5 font-serif text-[13px] italic leading-tight text-sidebar-foreground/45">
-              Non Scholae Sed Vitae Discimu
+              Non Scholae Sed Vitae Discimus
             </p>
           </Link>
           <button
